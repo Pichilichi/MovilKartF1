@@ -8,26 +8,53 @@ class Page2 extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          // text 1 
-          Padding(
-            padding: EdgeInsets.only(
-              left: 80, right: 80, bottom: 80, top: 160)
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 48),
+
+            //Text1
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.0),
+              child: Text("Holiwi"),
               ),
-          //text
-          Padding(
-            padding: EdgeInsets.all(24.0),
-            child: Text(
-              "Holiwi",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 40,
-                fontWeight: FontWeight.bold
-              )
-            )
-          ),
-        ]
+
+            const SizedBox(height: 4),
+
+              //Text2
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: Text("Que tal?",
+                  style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 24),
+
+              //Divider
+              const Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: Divider(),
+              ),
+
+              const SizedBox(height: 24),
+
+              //Text below divider
+              const Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: Text(
+                  "Cositas aqui",
+                  style: TextStyle(fontSize: 16)
+                ),
+              ),
+
+              
+          ],
+        ),
       )
     );
   }
