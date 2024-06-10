@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:kartf1/models/event.dart';
 
 import 'page_2.dart';
 

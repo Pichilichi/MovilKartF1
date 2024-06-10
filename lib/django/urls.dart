@@ -1,26 +1,18 @@
-import 'package:kartf1/models/event.dart';
+import 'package:kartf1/models/bookings.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
+// import 'dart:convert';
 import 'dart:async';
 
-// const baseUrl = "http://127.0.0.1:8000/";
+import '../models/categories.dart';
+import '../models/circuits.dart';
+import '../models/equipments.dart';
+import '../models/karts.dart';
 
-// var baseUrl = Uri.parse("http://127.0.0.1:8000/");
-
-// Future<List<Event>> getEvents() async {
-//     final response = await http.get('$baseUrl/events' as Uri);
-
-//     if (response.statusCode == 200) {
-//       final List result = json.decode(response.body);
-//       return result.map((e) => Event.fromJson(e)).toList();
-//     } else {
-//       throw Exception('Failed to load data');
-//     }
-//   }
-
+// CLASS WITH ALL THE CALLS TO THE ENDPOINTS
 class Urls{
 
-  Future<List<Booking>?> getEvents() async {
+  //BOOKINGS
+  Future<List<Booking>?> getBookings() async {  
     var client = http.Client();
 
     var uri = Uri.parse('https://pacou.pythonanywhere.com/bookings/');
@@ -28,6 +20,54 @@ class Urls{
     if(response.statusCode == 200){
       var json = response.body;
       return bookingFromJson(json);
+    }
+  }
+
+  //CIRCUITS
+  Future<List<Circuits>?> getCircuits() async {
+    var client = http.Client();
+
+    var uri = Uri.parse('https://pacou.pythonanywhere.com/circuits/');
+    var response = await client.get(uri);
+    if(response.statusCode == 200){
+      var json = response.body;
+      return circuitsFromJson(json);
+    }
+  }
+
+  //CATEGORIES
+  Future<List<Categories>?> getCategories() async {
+    var client = http.Client();
+
+    var uri = Uri.parse('https://pacou.pythonanywhere.com/categories/');
+    var response = await client.get(uri);
+    if(response.statusCode == 200){
+      var json = response.body;
+      return categoriesFromJson(json);
+    }
+  }
+
+  //EQUIPMENTS
+  Future<List<Equipments>?> getEquipments() async {
+    var client = http.Client();
+
+    var uri = Uri.parse('https://pacou.pythonanywhere.com/equipments/');
+    var response = await client.get(uri);
+    if(response.statusCode == 200){
+      var json = response.body;
+      return equipmentsFromJson(json);
+    }
+  }
+
+  //KARTS
+  Future<List<Karts>?> getKarts() async {
+    var client = http.Client();
+
+    var uri = Uri.parse('https://pacou.pythonanywhere.com/karts/');
+    var response = await client.get(uri);
+    if(response.statusCode == 200){
+      var json = response.body;
+      return kartsFromJson(json);
     }
   }
 }

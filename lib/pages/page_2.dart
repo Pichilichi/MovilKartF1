@@ -1,12 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
-import 'package:kartf1/models/event.dart';
+import 'package:kartf1/models/bookings.dart';
 import 'package:kartf1/django/urls.dart';
 
 
@@ -31,7 +29,7 @@ class _Page2State extends State<Page2> {
   }
 
   getData() async {
-    events = await Urls().getEvents();
+    events = await Urls().getBookings();
     if(events != null){
       setState(() {
         isLoaded = true;
