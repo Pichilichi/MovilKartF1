@@ -1,11 +1,20 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:kartf1/models/event.dart';
 
 import 'page_2.dart';
 
-class IntroPage extends StatelessWidget{
-  const IntroPage({super.key});
+class IntroPage extends StatefulWidget {
+  const IntroPage({Key? key}) : super(key: key);
+
+  @override
+  _IntroPageState createState() => _IntroPageState();
+} 
+
+class _IntroPageState extends State<IntroPage>{
+  // List<Event> events = [];
+  // var isLoaded = false;
 
   @override
   Widget build(BuildContext context){
@@ -33,6 +42,18 @@ class IntroPage extends StatelessWidget{
           Text(
             "subtitulo wapo"
           ),
+
+          // Padding(
+          //   padding: EdgeInsets.all(24.0),
+          //   child: ListView.builder(
+          //         // itemCount: events.length,
+          //         itemBuilder: (context, index) {
+          //           return Container(
+          //             child: Text('Hi'),
+          //           );
+          //         },
+          //       ),
+          // ),
 
           const Spacer(),
 
