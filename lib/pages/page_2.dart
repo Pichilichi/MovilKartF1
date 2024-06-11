@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:kartf1/models/bookings.dart';
+import 'package:kartf1/models/messages.dart';
 import 'package:kartf1/django/urls.dart';
 
 
@@ -17,7 +18,8 @@ class Page2 extends StatefulWidget{
 
 class _Page2State extends State<Page2> {
   Client client = http.Client();
-  List<Booking>? events = [];
+  List<Booking>? books = [];
+  List<Messages>? msg = [];
   var isLoaded = false;
 
   @override
@@ -26,11 +28,21 @@ class _Page2State extends State<Page2> {
     super.initState();
 
     getData();
+    getMsg();
   }
 
   getData() async {
-    events = await Urls().getBookings();
-    if(events != null){
+    books = await Urls().getBookings();
+    if(books != null){
+      setState(() {
+        isLoaded = true;
+      });
+    }
+  }
+
+  getMsg() async {
+    msg = await Urls().getMessages();
+    if(msg != null){
       setState(() {
         isLoaded = true;
       });
@@ -50,13 +62,52 @@ class _Page2State extends State<Page2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[300],
       body: Visibility(
         visible: isLoaded,
         child: ListView.builder(
-          itemCount: events?.length,
+          itemCount: books?.length,
           itemBuilder: (context, index) {
             return Container(
-              child: Text(events![index].name),
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                children: [
+                  Container(
+                    height: 50, 
+                    width: 50,
+                  ),
+                  SizedBox(width: 16,),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          books![index].name, //BOOKINGS
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          'Number of participants: ' +
+                          books![index].racers.length.toString(), //RACERS
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        Text(
+                          'Race Day : ' +
+                          books![index].raceDay.day.toString() + '/' + books![index].raceDay.month.toString(),//DATE
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              // child: Text(events![index].name), //BOOKINGS
             );
           },
         ),

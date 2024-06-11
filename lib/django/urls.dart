@@ -1,5 +1,6 @@
 import 'package:kartf1/models/bookings.dart';
 import 'package:http/http.dart' as http;
+import 'package:kartf1/models/messages.dart';
 // import 'dart:convert';
 import 'dart:async';
 
@@ -68,6 +69,18 @@ class Urls{
     if(response.statusCode == 200){
       var json = response.body;
       return kartsFromJson(json);
+    }
+  }
+
+  //MESSAGES
+  Future<List<Messages>?> getMessages() async {
+    var client = http.Client();
+
+    var uri = Uri.parse('https://pacou.pythonanywhere.com/messages/');
+    var response = await client.get(uri);
+    if(response.statusCode == 200){
+      var json = response.body;
+      return messagesFromJson(json);
     }
   }
 }
