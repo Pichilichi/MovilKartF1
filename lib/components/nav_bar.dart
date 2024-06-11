@@ -15,15 +15,25 @@ class MyNavBar extends StatelessWidget {
         tabActiveBorder: Border.all(color: Colors.white),
         tabBackgroundColor: Colors.grey.shade100,
         mainAxisAlignment: MainAxisAlignment.center,
+        tabBorderRadius: 16,
+        gap: 8,
         onTabChange: (value) => onTabChange!(value),
         tabs: const [
           GButton(
             icon: Icons.home,
-            text: 'Home',
+            text: 'Bookings',
+          ),
+          GButton(
+            icon: Icons.art_track,
+            text: 'Circuits',
           ),
           GButton(
             icon: Icons.shopping_bag_rounded,
             text: 'Shop',
+          ),
+          GButton(
+            icon: Icons.shopping_cart,
+            text: 'Cart',
           ),
         ],
       ),

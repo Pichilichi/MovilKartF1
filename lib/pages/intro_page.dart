@@ -2,9 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:kartf1/components/nav_bar.dart';
-import 'package:kartf1/pages/page_3.dart';
+import 'package:kartf1/pages/Cart_page.dart';
+import 'package:kartf1/pages/Circ_page.dart';
+import 'package:kartf1/pages/Equip_page.dart';
 
-import 'page_2.dart';
+import 'Book_page.dart';
 
 class IntroPage extends StatefulWidget {
   const IntroPage({Key? key}) : super(key: key);
@@ -24,9 +26,13 @@ class _IntroPageState extends State<IntroPage>{
 
   final List<Widget> _pages = [
     //BOOKINGS
-    const Page2(),
+    const BookPage(),
 
-    const Page3(),
+    const CircPage(),
+
+    const EquipPage(),
+
+    const CartPage(),
   ];
   // List<Event> events = [];
   // var isLoaded = false;
@@ -43,10 +49,13 @@ class _IntroPageState extends State<IntroPage>{
         elevation: 0,
         leading: Builder(
           builder: (context) => IconButton(
-              icon: const Icon(
-                Icons.menu, 
-                color: Colors.black,
-                ),
+              icon: const Padding(
+                padding: EdgeInsets.only(left: 12.0),
+                child: Icon(
+                  Icons.menu, 
+                  color: Colors.black,
+                  ),
+              ),
                 onPressed: () {
                   Scaffold.of(context).openDrawer();
                 },
@@ -55,6 +64,56 @@ class _IntroPageState extends State<IntroPage>{
       ),
       drawer: Drawer(
         backgroundColor: Colors.grey[900],
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0) ,
+                  child: Divider(
+                    color: Colors.grey[800],
+                  ),
+                ),
+
+                const Padding(
+                  padding: const EdgeInsets.only(left: 25.0),
+                  child: ListTile(
+                    leading: Icon(Icons.home, color: Colors.white,),
+                    title: Text(
+                      'Home', 
+                      style: TextStyle(color: Colors.white)
+                    ),
+                  ),
+                ),
+
+                // GestureDetector(
+                //   onTap: () => Navigator.pushReplacement(
+                //     context, MaterialPageRoute(
+                //       builder: (context) {
+                //         return const BookPage();
+                //       },
+                //     )
+                //   )
+                  
+                // )
+              ],
+            ),
+            const Padding(
+              padding: EdgeInsets.only(left: 25.0, bottom: 25),
+              child: ListTile(
+                leading: Icon(
+                  Icons.logout, 
+                  color: Colors.white,
+                ),
+                title: Text(
+                  'Logout', 
+                  style: TextStyle(color: Colors.white)
+                ),
+              ),
+            ),
+          ],  
+        ),
       ),
       body: _pages[_selectedIndex],
       // body: Column(

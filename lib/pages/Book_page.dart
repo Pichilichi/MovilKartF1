@@ -9,14 +9,14 @@ import 'package:kartf1/models/messages.dart';
 import 'package:kartf1/django/urls.dart';
 
 
-class Page2 extends StatefulWidget{
-  const Page2({Key? key}) : super(key: key);
+class BookPage extends StatefulWidget{
+  const BookPage({Key? key}) : super(key: key);
 
   @override
-  _Page2State createState() => _Page2State();
+  _BookPageState createState() => _BookPageState();
 }
 
-class _Page2State extends State<Page2> {
+class _BookPageState extends State<BookPage> {
   Client client = http.Client();
   List<Booking>? books = [];
   List<Messages>? msg = [];

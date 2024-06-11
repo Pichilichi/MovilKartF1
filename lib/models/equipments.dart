@@ -25,7 +25,7 @@ class Equipments {
         id: json["id"],
         name: json["name"],
         equipmentCategory: json["equipment_category"],
-        price: json["price"],
+        price: json["price"].toInt(), // FROM FLOAT/DOUBLE TO INT
         updated: DateTime.parse(json["updated"]),
         created: DateTime.parse(json["created"]),
     );
