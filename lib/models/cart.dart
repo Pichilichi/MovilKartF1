@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:kartf1/models/equipments.dart';
+// import 'package:kartf1/models/photo.dart';
 
 class Cart extends ChangeNotifier {
   // List<Equipments> eqShop = [];
+
+  // List<Photo> ph = [
+  //   Photo(
+  //     imagePath: 'lib/images/casco.jpg'
+  //   )
+  // ];
 
   List<Equipments> userCart = [];
 

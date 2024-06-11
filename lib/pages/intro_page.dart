@@ -45,7 +45,7 @@ class _IntroPageState extends State<IntroPage>{
         onTabChange: (index)=> navBottomBar(index),
       ),
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.grey[300],
         elevation: 0,
         // leading: Builder(
         //   builder: (context) => IconButton(

@@ -72,16 +72,15 @@ class _CircPageState extends State<CircPage> {
                           ),
                         ),
                         Text(
-                          'Description: ' +
                           circuits![index].body, //DESCRIPTION
-                          maxLines: 10,
+                          maxLines: 20,
                           overflow: TextOverflow.ellipsis,
                         ),
                         Text(
-                          'Circuits length : '  +
+                          'Track length : '  +
                           circuits![index].km.toString() + ' km',
                           //DATE
-                          maxLines: 10,
+                          maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ],

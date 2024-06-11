@@ -10,10 +10,20 @@ class LoginPage extends StatefulWidget {
 
 }
 
-TextEditingController userController = TextEditingController();
-TextEditingController pwdController = TextEditingController();
 
-void login(String user, password) async{
+
+
+class _LoginPageState extends State<LoginPage>{
+
+  TextEditingController userController = TextEditingController();
+  TextEditingController pwdController = TextEditingController();
+  
+  get existe => null;
+
+
+
+  void login(String user, password) async{
+
   try{
     Response response = await post(Uri.parse('https://pacou.pythonanywhere.com/login'),
       body: {
@@ -30,8 +40,6 @@ void login(String user, password) async{
     print(e.toString());
   }
 }
-
-class _LoginPageState extends State<LoginPage>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,6 +50,13 @@ class _LoginPageState extends State<LoginPage>{
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Icon(
+              Icons.lock,
+              size: 100,
+            ),
+
+            const SizedBox(height: 50),
+
             TextField(
               controller: userController,
               decoration: InputDecoration(
@@ -58,7 +73,7 @@ class _LoginPageState extends State<LoginPage>{
             TextField(
               controller: pwdController,
               decoration: InputDecoration(
-                hintText: 'Password',
+                hintText: 'password',
                 border: OutlineInputBorder(
 
                 ),
@@ -68,7 +83,7 @@ class _LoginPageState extends State<LoginPage>{
             GestureDetector(
               onTap: () {
                 login(userController.text.toString(), pwdController.text.toString());
-                Navigator.push(context, MaterialPageRoute(builder: (context) => IntroPage()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => IntroPage())); 
               },
               child: Container(
                 height: 60,

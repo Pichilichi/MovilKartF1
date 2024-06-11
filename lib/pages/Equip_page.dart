@@ -5,6 +5,7 @@ import 'package:kartf1/components/Equipment_tile.dart';
 import 'package:kartf1/components/nav_bar.dart';
 import 'package:kartf1/models/cart.dart';
 import 'package:kartf1/models/equipments.dart';
+import 'package:kartf1/models/photo.dart';
 import 'package:provider/provider.dart';
 
 import '../django/urls.dart';
@@ -21,6 +22,7 @@ class _EquipPageState extends State<EquipPage>{
 
   Client client = http.Client();
   List<Equipments>? eq = [];
+  List<Photo>? ph = [];
 
   var isLoaded = false;
 
@@ -139,6 +141,7 @@ class _EquipPageState extends State<EquipPage>{
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+
 
                                 // NAME
                                 Text(
