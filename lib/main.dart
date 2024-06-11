@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kartf1/models/cart.dart';
+import 'package:kartf1/pages/login_page.dart';
 import 'package:provider/provider.dart';
 import 'pages/intro_page.dart';
 
@@ -17,7 +18,8 @@ class MyApp extends StatelessWidget {
       create: (context) => Cart(),
       builder: (context, child) => const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: IntroPage(),
+      // home: IntroPage(),
+      home: LoginPage(),
       ),
     );
     // return MaterialApp(
