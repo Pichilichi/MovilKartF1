@@ -47,74 +47,74 @@ class _IntroPageState extends State<IntroPage>{
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: Builder(
-          builder: (context) => IconButton(
-              icon: const Padding(
-                padding: EdgeInsets.only(left: 12.0),
-                child: Icon(
-                  Icons.menu, 
-                  color: Colors.black,
-                  ),
-              ),
-                onPressed: () {
-                  Scaffold.of(context).openDrawer();
-                },
-              ),
-        ),
+        // leading: Builder(
+        //   builder: (context) => IconButton(
+        //       icon: const Padding(
+        //         padding: EdgeInsets.only(left: 12.0),
+        //         child: Icon(
+        //           Icons.menu, 
+        //           color: Colors.black,
+        //           ),
+        //       ),
+        //         onPressed: () {
+        //           Scaffold.of(context).openDrawer();
+        //         },
+        //       ),
+        // ),
       ),
-      drawer: Drawer(
-        backgroundColor: Colors.grey[900],
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0) ,
-                  child: Divider(
-                    color: Colors.grey[800],
-                  ),
-                ),
+      // drawer: Drawer(
+      //   backgroundColor: Colors.grey[900],
+      //   child: Column(
+      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //     children: [
+      //       Column(
+      //         children: [
+      //           Padding(
+      //             padding: const EdgeInsets.symmetric(horizontal: 25.0) ,
+      //             child: Divider(
+      //               color: Colors.grey[800],
+      //             ),
+      //           ),
 
-                const Padding(
-                  padding: const EdgeInsets.only(left: 25.0),
-                  child: ListTile(
-                    leading: Icon(Icons.home, color: Colors.white,),
-                    title: Text(
-                      'Home', 
-                      style: TextStyle(color: Colors.white)
-                    ),
-                  ),
-                ),
+      //           const Padding(
+      //             padding: const EdgeInsets.only(left: 25.0),
+      //             child: ListTile(
+      //               leading: Icon(Icons.home, color: Colors.white,),
+      //               title: Text(
+      //                 'Home', 
+      //                 style: TextStyle(color: Colors.white)
+      //               ),
+      //             ),
+      //           ),
 
-                // GestureDetector(
-                //   onTap: () => Navigator.pushReplacement(
-                //     context, MaterialPageRoute(
-                //       builder: (context) {
-                //         return const BookPage();
-                //       },
-                //     )
-                //   )
+      //           // GestureDetector(
+      //           //   onTap: () => Navigator.pushReplacement(
+      //           //     context, MaterialPageRoute(
+      //           //       builder: (context) {
+      //           //         return const BookPage();
+      //           //       },
+      //           //     )
+      //           //   )
                   
-                // )
-              ],
-            ),
-            const Padding(
-              padding: EdgeInsets.only(left: 25.0, bottom: 25),
-              child: ListTile(
-                leading: Icon(
-                  Icons.logout, 
-                  color: Colors.white,
-                ),
-                title: Text(
-                  'Logout', 
-                  style: TextStyle(color: Colors.white)
-                ),
-              ),
-            ),
-          ],  
-        ),
-      ),
+      //           // )
+      //         ],
+      //       ),
+      //       const Padding(
+      //         padding: EdgeInsets.only(left: 25.0, bottom: 25),
+      //         child: ListTile(
+      //           leading: Icon(
+      //             Icons.logout, 
+      //             color: Colors.white,
+      //           ),
+      //           title: Text(
+      //             'Logout', 
+      //             style: TextStyle(color: Colors.white)
+      //           ),
+      //         ),
+      //       ),
+      //     ],  
+      //   ),
+      // ),
       body: _pages[_selectedIndex],
       // body: Column(
       //   children: [
