@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
@@ -14,6 +16,14 @@ class BookPage extends StatefulWidget{
 
   @override
   _BookPageState createState() => _BookPageState();
+}
+
+class AddBookPage extends StatefulWidget {
+  const AddBookPage({super.key});
+
+  @override
+  _AddBookPageState createState() => _AddBookPageState();
+
 }
 
 class _BookPageState extends State<BookPage> {
@@ -65,8 +75,19 @@ class _BookPageState extends State<BookPage> {
       backgroundColor: Colors.grey[300],
       body: Visibility(
         visible: isLoaded,
+
+        replacement: const Center(
+          child: CircularProgressIndicator(),
+        ),
+
+        
+
+        
         child: ListView.builder(
           itemCount: books?.length,
+          
+
+          
           itemBuilder: (context, index) {
             return Container(
               padding: const EdgeInsets.all(16),
@@ -91,29 +112,38 @@ class _BookPageState extends State<BookPage> {
                           ),
                         ),
                         Text(
-                          'Number of participants: ' +
-                          books![index].racers.length.toString(), //RACERS
+                          'Number of participants: ${books![index].racers.length}', //RACERS
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                         ),
                         Text(
-                          'Race Day : ' +
-                          books![index].raceDay.day.toString() + '/' + books![index].raceDay.month.toString(),//DATE
+                          'Race Day : ${books![index].raceDay.day}/${books![index].raceDay.month}',//DATE
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                         ),
+
+                        
                       ],
                     ),
                   ),
+                  Icon(
+                    Icons.cancel_rounded,
+                    size: 20
+                  ),
                 ],
+                
+                
               ),
+              
               // child: Text(events![index].name), //BOOKINGS
             );
+            
           },
+          
         ),
-        replacement: const Center(
-          child: CircularProgressIndicator(),
-        ),
+
+        // child: ElevatedButton(onPressed: () {  }, child: null,),
+       
       ),
       // body: SafeArea(
       //   child: Column(
@@ -175,3 +205,141 @@ class _BookPageState extends State<BookPage> {
   }
 }
   
+class _AddBookPageState extends State<AddBookPage>{
+
+  
+
+  void addBooking(String bookName, raceDay, user, circuit) async{
+
+    try{
+
+      print("dentro del response");
+      Response response = await post(
+        Uri.parse('https://pacou.pythonanywhere.com/bookings/'),
+        body: {
+          'name': bookName,
+          'raceDay': raceDay,
+          'user': user,
+          'circuit': circuit,
+        }
+      );
+
+      if(response.statusCode == 201){
+        var data = jsonDecode(response.body.toString());
+        print('data added');
+        print(data);
+        Navigator.push(context, MaterialPageRoute(builder: (context) => BookPage()));
+      }else{
+        print('failed');
+        showDialog(
+          context: context, 
+          builder: (context) => AlertDialog(
+            title: Text('Something went wrong...'),
+            content: Text('Check the data'),
+          ),
+        );
+      }
+    }catch(e){
+      print(e.toString());
+    }
+  }
+
+  TextEditingController nameBook = TextEditingController();
+  TextEditingController raceDayBook = TextEditingController();
+  TextEditingController userBook = TextEditingController();
+  TextEditingController circuitBook = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.grey[300],
+      body: Padding(
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(height: 50),
+
+            TextField(
+              controller: nameBook,
+              decoration: InputDecoration(
+                hintText: 'Booking name',
+                border: OutlineInputBorder(
+
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 20,),
+
+
+            TextField(
+              controller: raceDayBook,
+              decoration: InputDecoration(
+                hintText: 'YYYY-MM-DD',
+                border: OutlineInputBorder(
+
+                ),
+              ),
+            ),
+
+             TextField(
+              controller: userBook,
+              decoration: InputDecoration(
+                hintText: 'user',
+                border: OutlineInputBorder(
+
+                ),
+              ),
+            ),
+
+            TextField(
+              controller: circuitBook,
+              decoration: InputDecoration(
+                hintText: 'Circuit',
+                border: OutlineInputBorder(
+
+                ),
+              ),
+            ),
+            const SizedBox(height: 20,),
+            GestureDetector(
+              onTap: () {
+                addBooking(nameBook.text.toString(), raceDayBook.text.toString(), 
+                userBook.text.toString(), circuitBook.text.toString());
+                // Navigator.push(context, MaterialPageRoute(builder: (context) => IntroPage())); 
+              },
+              child: Container(
+                height: 60,
+                width: 300,
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: const Center(
+                  child: Text(
+                    'Add Booking', 
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+//             ElevatedButton(
+//               child: const Text('Registro'),
+//               onPressed: () {
+//                 Navigator.push(
+//                 context,
+//                 MaterialPageRoute(builder: (context) => const RegisterPage()),
+//               );
+// }
+//             ),
+          ],
+        ),
+      ),
+    );
+  }
+}
