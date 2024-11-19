@@ -99,7 +99,7 @@ class _BookPageState extends State<BookPage> {
                 Navigator.push(
                   context, 
                   MaterialPageRoute(
-                    builder: (context) => BookselectedPage(b: books![index]),
+                    builder: (context) => bookSelectedPage(b: books![index]),
                   ),
                 );
               },

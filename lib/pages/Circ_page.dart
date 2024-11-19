@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:kartf1/models/circuits.dart';
 import 'package:kartf1/django/urls.dart';
+import 'package:kartf1/pages/circuitSelected_page.dart';
 
 
 class CircPage extends StatefulWidget{
@@ -68,6 +69,7 @@ class _CircPageState extends State<CircPage> {
   // }
 
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,47 +80,58 @@ class _CircPageState extends State<CircPage> {
         child: ListView.builder(
             itemCount: circuits?.length,
             itemBuilder: (context, index) {
-              return Container(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  children: [
-                    Container(
-                      height: 50, 
-                      width: 50,
+              return ListTile(
+              title: Text(circuits![index].name),
+              onTap: () {
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(
+                    builder: (context) => circuitSelectedPage(c: circuits![index]),
                     ),
-                    SizedBox(width: 16,),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            circuits![index].name, //CIRCUITS
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            circuits![index].body, //DESCRIPTION
-                            maxLines: 20,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          Text(
-                            'Track length : '  +
-                            circuits![index].km.toString() + ' km',
-                            //DATE
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                // child: Text(events![index].name), //BOOKINGS
+                  );
+                },
               );
+              // return Container(
+              //   padding: const EdgeInsets.all(16),
+              //   child: Row(
+              //     children: [
+              //       Container(
+              //         height: 50, 
+              //         width: 50,
+              //       ),
+              //       SizedBox(width: 16,),
+              //       Expanded(
+              //         child: Column(
+              //           crossAxisAlignment: CrossAxisAlignment.start,
+              //           children: [
+              //             Text(
+              //               circuits![index].name, //CIRCUITS
+              //               maxLines: 2,
+              //               overflow: TextOverflow.ellipsis,
+              //               style: TextStyle(
+              //                 fontSize: 24,
+              //                 fontWeight: FontWeight.bold,
+              //               ),
+              //             ),
+              //             Text(
+              //               circuits![index].body, //DESCRIPTION
+              //               maxLines: 20,
+              //               overflow: TextOverflow.ellipsis,
+              //             ),
+              //             Text(
+              //               'Track length : '  +
+              //               circuits![index].km.toString() + ' km',
+              //               //DATE
+              //               maxLines: 1,
+              //               overflow: TextOverflow.ellipsis,
+              //             ),
+              //           ],
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              //   // child: Text(events![index].name), //BOOKINGS
+              // );
             },
             ),
           
