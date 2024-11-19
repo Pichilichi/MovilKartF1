@@ -9,6 +9,7 @@ import 'package:http/http.dart';
 import 'package:kartf1/models/bookings.dart';
 import 'package:kartf1/models/messages.dart';
 import 'package:kartf1/django/urls.dart';
+import 'package:kartf1/pages/bookSelected_page.dart';
 
 
 class BookPage extends StatefulWidget{
@@ -16,6 +17,9 @@ class BookPage extends StatefulWidget{
 
   @override
   _BookPageState createState() => _BookPageState();
+
+  //añadir un "pullRefresh" para que podamos 
+  //actualizar al arrastrar hacia abajo
 }
 
 class AddBookPage extends StatefulWidget {
@@ -89,54 +93,71 @@ class _BookPageState extends State<BookPage> {
 
           
           itemBuilder: (context, index) {
-            return Container(
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                children: [
-                  Container(
-                    height: 50, 
-                    width: 50,
+            return ListTile(
+              title: Text(books![index].name),
+              onTap: () {
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(
+                    builder: (context) => BookselectedPage(b: books![index]),
                   ),
-                  SizedBox(width: 16,),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          books![index].name, //BOOKINGS
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          'Number of participants: ${books![index].racers.length}', //RACERS
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        Text(
-                          'Race Day : ${books![index].raceDay.day}/${books![index].raceDay.month}',//DATE
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                );
+              },
+            );
+            // return BookTile(
+            //       B: books[index],
+            //       onTap: () => Navigator.push(context,
+            //       MaterialPageRoute(builder: (context) => BookSelected(B: B)))
+            //     );
+            // return Container(
+            //   padding: const EdgeInsets.all(16),
+            //   child: Row(
+            //     children: [
+            //       Container(
+            //         height: 50, 
+            //         width: 50,
+            //       ),
+            //       SizedBox(width: 16,),
+            //       Expanded(
+            //         child: Column(
+            //           crossAxisAlignment: CrossAxisAlignment.start,
+            //           children: [
+            //             Text(
+            //               books![index].name, //BOOKINGS
+            //               maxLines: 2,
+            //               overflow: TextOverflow.ellipsis,
+            //               style: TextStyle(
+            //                 fontSize: 24,
+            //                 fontWeight: FontWeight.bold,
+            //               ),
+            //             ),
+            //             Text(
+            //               'Number of participants: ${books![index].racers.length}', //RACERS
+            //               maxLines: 3,
+            //               overflow: TextOverflow.ellipsis,
+            //             ),
+            //             Text(
+            //               'Race Day : ${books![index].raceDay.day}/${books![index].raceDay.month}',//DATE
+            //               maxLines: 3,
+            //               overflow: TextOverflow.ellipsis,
+            //             ),
 
                         
-                      ],
-                    ),
-                  ),
-                  Icon(
-                    Icons.cancel_rounded,
-                    size: 20
-                  ),
-                ],
+            //           ],
+            //         ),
+            //       ),
+            //       Icon(
+            //         Icons.cancel_rounded,
+            //         size: 20
+            //       ),
+            //     ],
                 
                 
-              ),
+                
+            //   ),
               
-              // child: Text(events![index].name), //BOOKINGS
-            );
+            //   // child: Text(events![index].name), //BOOKINGS
+            // );
             
           },
           
@@ -229,6 +250,7 @@ class _AddBookPageState extends State<AddBookPage>{
         print('data added');
         print(data);
         Navigator.push(context, MaterialPageRoute(builder: (context) => BookPage()));
+        // IntroPage(), prueba a ver si sale la barra de abajo asi
       }else{
         print('failed');
         showDialog(
@@ -343,3 +365,4 @@ class _AddBookPageState extends State<AddBookPage>{
     );
   }
 }
+

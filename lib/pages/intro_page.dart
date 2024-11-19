@@ -48,6 +48,8 @@ class _IntroPageState extends State<IntroPage>{
       ),
       appBar: AppBar(
         backgroundColor: Colors.grey[300],
+        automaticallyImplyLeading: false, // cambia lo del boton hacia atras (testear)
+        scrolledUnderElevation: 0.0, // la barra superior deberia ser 100% transparente ahora
         elevation: 0,
         // leading: Builder(
         //   builder: (context) => IconButton(
