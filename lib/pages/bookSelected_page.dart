@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kartf1/models/bookings.dart';
+import 'package:kartf1/pages/Book_page.dart';
+import 'package:kartf1/pages/intro_page.dart';
 
 class bookSelectedPage extends StatelessWidget {
   // In the constructor, require a Todo.
@@ -14,6 +16,32 @@ class bookSelectedPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(b.name),
+        actions: [
+          IconButton(onPressed: () {
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: Text("Are you sure you want to delete the booking?"),
+                actions: [
+                  
+                  TextButton(
+                    onPressed: () => Navigator.pop(context), 
+                    child: const Text("Cancel")
+                  ),
+
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => IntroPage()));
+                      // el borrarlo de la api
+                    },
+                    child: Text(b.id.toString())
+                  ), //id del booking para borrarlo
+                ],
+              )
+            );
+          }, icon: const Icon (Icons.delete))
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),

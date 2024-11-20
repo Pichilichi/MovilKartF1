@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kartf1/components/cart_item.dart';
 import 'package:kartf1/models/cart.dart';
 import 'package:kartf1/models/equipments.dart';
+import 'package:kartf1/pages/Payment_page.dart';
 import 'package:provider/provider.dart';
 
 class CartPage extends StatelessWidget {
@@ -33,6 +34,12 @@ class CartPage extends StatelessWidget {
                 },
               ),
             ),
+
+            TextButton(
+              onPressed: () => Navigator.push(
+                context, MaterialPageRoute(builder: (context) => const PaymentPage(),
+                )), 
+              child: Text("Payment!"))
           ],  
         ),
       ),
