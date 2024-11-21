@@ -16,10 +16,7 @@ class CartPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'My cart',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-            ),
+            
 
             const SizedBox(height: 20),
 
@@ -35,12 +32,44 @@ class CartPage extends StatelessWidget {
               ),
             ),
 
-            TextButton(
-              onPressed: () => Navigator.push(
-                context, MaterialPageRoute(builder: (context) => const PaymentPage(),
-                )), 
-              child: Text("Payment!"))
-          ],  
+            // Payment button. If cart empty, shows message and doesnt change pages
+            GestureDetector(
+              
+                onTap: () {
+                  if (value.getUserCart().length == 0){
+                    null;
+                    final sb = SnackBar(content: 
+                    Text("The cart is empty, try adding something!"),
+                    duration: const Duration(milliseconds: 2000),);
+                    ScaffoldMessenger.of(context).showSnackBar(sb);
+                  }else{
+                    Navigator.push(
+                      context, MaterialPageRoute(builder: (context) 
+                      => const PaymentPage(),
+                    )); 
+                  }
+                },
+                child: Container (
+                  alignment: Alignment.center,
+                  height: 45,
+                  width: 400,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'Payment!', 
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                )
+            ),
+          ]  
         ),
       ),
     );
