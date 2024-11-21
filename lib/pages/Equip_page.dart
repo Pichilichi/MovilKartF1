@@ -6,6 +6,7 @@ import 'package:kartf1/components/nav_bar.dart';
 import 'package:kartf1/models/cart.dart';
 import 'package:kartf1/models/equipments.dart';
 import 'package:kartf1/models/photo.dart';
+import 'package:kartf1/pages/Cart_page.dart';
 import 'package:provider/provider.dart';
 
 import '../django/urls.dart';
@@ -64,7 +65,29 @@ class _EquipPageState extends State<EquipPage>{
     ?.where((e) => e.equipmentCategory == _nameCat).toList();
 
     return Consumer<Cart>(
-      builder: (context, value, child) => Column(
+      builder: (context, value, child) => Scaffold(
+
+        backgroundColor: Colors.grey[300],
+        appBar: AppBar(
+        title: Text("Shop"),
+        // actions: [
+        //   IconButton(
+        //   icon: Icon(Icons.arrow_back), 
+        //   onPressed: (){
+        //     Navigator.push(context, MaterialPageRoute(builder: (context) => const CartPage()));
+        //   },
+        //  ),
+        // ],
+        
+        titleTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: Colors.black),
+        backgroundColor: Colors.grey[300],
+        automaticallyImplyLeading: false, // cambia lo del boton hacia atras (testear)
+        scrolledUnderElevation: 0.0, // la barra superior deberia ser 100% transparente ahora
+        elevation: 0,
+      ),
+
+        body: Column(
+
         
         children: [
 
@@ -238,6 +261,7 @@ class _EquipPageState extends State<EquipPage>{
             ),
           ),
         ],
+        ),
       ),
     );
   }

@@ -11,7 +11,30 @@ class CartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<Cart>(
-      builder: (context, value, child) => Padding(
+      builder: (context, value, child) => Scaffold(
+      backgroundColor: Colors.grey[300],
+
+        appBar: AppBar(
+        title: Text("Cart"),
+        // actions: [
+        //   IconButton(
+        //   icon: Icon(Icons.arrow_back), 
+        //   onPressed: (){
+        //     Navigator.pop(context, MaterialPageRoute(builder: (context) => IntroPage()));
+        //   },
+        //  ),
+        // ],
+        
+        titleTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: Colors.black),
+        backgroundColor: Colors.grey[300],
+        automaticallyImplyLeading: false, // cambia lo del boton hacia atras (testear)
+        scrolledUnderElevation: 0.0, // la barra superior deberia ser 100% transparente ahora
+        elevation: 0,
+      ),
+
+        body: Padding(
+
+        
         padding: const EdgeInsets.symmetric(horizontal: 25),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,6 +93,7 @@ class CartPage extends StatelessWidget {
                 )
             ),
           ]  
+        ),
         ),
       ),
     );

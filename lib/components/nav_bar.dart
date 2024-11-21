@@ -24,10 +24,6 @@ class MyNavBar extends StatelessWidget {
             text: 'Bookings',
           ),
           GButton(
-            icon: Icons.home_work,
-            text: 'Cart',
-          ),
-          GButton(
             icon: Icons.art_track,
             text: 'Circuits',
           ),

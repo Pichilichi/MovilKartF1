@@ -76,6 +76,24 @@ class _BookPageState extends State<BookPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(" Booking "),
+        actions: [
+          IconButton(
+          icon: Icon(Icons.add), 
+          onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context) => AddBookPage()));
+          },
+         ),
+        ],
+        
+        titleTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: Colors.black),
+        backgroundColor: Colors.grey[300],
+        automaticallyImplyLeading: false, // cambia lo del boton hacia atras (testear)
+        scrolledUnderElevation: 0.0, // la barra superior deberia ser 100% transparente ahora
+        elevation: 0,
+      ),
+      
       backgroundColor: Colors.grey[300],
       body: Visibility(
         visible: isLoaded,
@@ -250,6 +268,7 @@ class _AddBookPageState extends State<AddBookPage>{
         print('data added');
         print(data);
         Navigator.push(context, MaterialPageRoute(builder: (context) => BookPage()));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => IntroPage()));
         // IntroPage(), prueba a ver si sale la barra de abajo asi
       }else{
         print('failed');
@@ -274,6 +293,24 @@ class _AddBookPageState extends State<AddBookPage>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(" Add a booking "),
+        actions: [
+          IconButton(
+          icon: Icon(Icons.arrow_back), 
+          onPressed: (){
+            Navigator.pop(context, MaterialPageRoute(builder: (context) => IntroPage()));
+          },
+         ),
+        ],
+        
+        titleTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: Colors.black),
+        backgroundColor: Colors.grey[300],
+        automaticallyImplyLeading: false, // cambia lo del boton hacia atras (testear)
+        scrolledUnderElevation: 0.0, // la barra superior deberia ser 100% transparente ahora
+        elevation: 0,
+      ),
+      
       backgroundColor: Colors.grey[300],
       body: Padding(
         padding: const EdgeInsets.all(8),

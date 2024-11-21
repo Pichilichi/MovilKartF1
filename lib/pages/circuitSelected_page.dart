@@ -15,10 +15,14 @@ class circuitSelectedPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(c.name),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Image.network("https://pacou.pythonanywhere.com${c.img}"),
+      body: Column(
+        children: [
+          Image.network("https://pacou.pythonanywhere.com${c.img}"),
 
+          Text(c.name),
+
+          Text(c.body)
+        ],  
       ),
     );
   }

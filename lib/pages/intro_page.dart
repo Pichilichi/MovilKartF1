@@ -38,7 +38,7 @@ class _IntroPageState extends State<IntroPage>{
   ];
 
   final List<String> _names = [
-    "Booking", "Add Booking", "Circuits", "Equipment", "Cart"
+    "Add Booking", "Circuits", "Equipment", "Cart"
   ];
   // List<Event> events = [];
   // var isLoaded = false;
@@ -50,13 +50,15 @@ class _IntroPageState extends State<IntroPage>{
       bottomNavigationBar: MyNavBar(
         onTabChange: (index)=> navBottomBar(index),
       ),
-      appBar: AppBar(
-        title: Text(" ${_names[_selectedIndex]} "),
-        titleTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: Colors.black),
-        backgroundColor: Colors.grey[300],
-        automaticallyImplyLeading: false, // cambia lo del boton hacia atras (testear)
-        scrolledUnderElevation: 0.0, // la barra superior deberia ser 100% transparente ahora
-        elevation: 0,
+      body: _pages[_selectedIndex],
+    );
+      // appBar: AppBar(
+      //   title: Text(" ${_names[_selectedIndex]} "),
+      //   titleTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: Colors.black),
+      //   backgroundColor: Colors.grey[300],
+      //   automaticallyImplyLeading: false, // cambia lo del boton hacia atras (testear)
+      //   scrolledUnderElevation: 0.0, // la barra superior deberia ser 100% transparente ahora
+      //   elevation: 0,
         // leading: Builder(
         //   builder: (context) => IconButton(
         //       icon: const Padding(
@@ -71,7 +73,7 @@ class _IntroPageState extends State<IntroPage>{
         //         },
         //       ),
         // ),
-      ),
+      
       // drawer: Drawer(
       //   backgroundColor: Colors.grey[900],
       //   child: Column(
@@ -125,7 +127,7 @@ class _IntroPageState extends State<IntroPage>{
       //     ],  
       //   ),
       // ),
-      body: _pages[_selectedIndex],
+      
       // body: Column(
       //   children: [
       //     // padding top
@@ -188,6 +190,6 @@ class _IntroPageState extends State<IntroPage>{
       //     const Spacer(),
       //   ],
       // )
-    );
+    
   }
 }
