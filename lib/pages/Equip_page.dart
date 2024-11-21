@@ -142,10 +142,23 @@ class _EquipPageState extends State<EquipPage>{
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children:[
-                      Text(
-                        _filteredEq![index].name,
-                        style: TextStyle(color: Colors.grey[600]),
+                        
+                      AspectRatio(
+                      aspectRatio: 1,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.secondary,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(23),
+                        child: Image.network("https://pacou.pythonanywhere.com${_filteredEq![index].img}"),
+                      )
                       ),
+                      // Text(
+                      //   _filteredEq![index].name,
+                      //   style: TextStyle(color: Colors.grey[600]),
+                      // ),
 
                       Padding(
                         padding: const EdgeInsets.only(left: 25.0),
@@ -172,6 +185,14 @@ class _EquipPageState extends State<EquipPage>{
                                 // PRICE
                                 Text(
                                   _filteredEq![index].price.toString() + '\€' ,
+                                  style: const TextStyle(
+                                    color: Colors.grey,
+                                  ),
+                                ),
+
+                                // STOCK
+                                Text(
+                                  _filteredEq![index].stock.toString() + ' units left' ,
                                   style: const TextStyle(
                                     color: Colors.grey,
                                   ),

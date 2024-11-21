@@ -17,7 +17,8 @@ class circuitSelectedPage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: Text('Info: ${c.body}')
+        child: Image.network("https://pacou.pythonanywhere.com${c.img}"),
+
       ),
     );
   }

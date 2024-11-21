@@ -27,13 +27,42 @@ class _CAartItemState extends State<CartItem> {
         borderRadius: BorderRadius.circular(8),
       ),
       margin: const EdgeInsets.only(bottom: 10),
-      child: ListTile(
-        title: Text(widget.equip.name),
-        subtitle: Text(widget.equip.price.toString() + '\€'),
-        trailing: IconButton(
-          icon: Icon(Icons.delete), 
-          onPressed: removeItemFromCart,
-        ),
+      // child: ListTile(
+      //   title: Text(widget.equip.name),
+      //   subtitle: Text(widget.equip.price.toString() + '\€'),
+      //   trailing: IconButton(
+      //     icon: Icon(Icons.delete), 
+      //     onPressed: removeItemFromCart,
+      //   ),
+      // ),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(50),
+                child: Image.network("https://pacou.pythonanywhere.com${widget.equip.img}", 
+                height: 80, 
+                width: 100,),
+              ),
+
+              const SizedBox(width: 10),
+
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(widget.equip.name),
+                  Text('${widget.equip.price}\€'),
+                ],
+              ),
+
+              IconButton(
+                onPressed: removeItemFromCart, 
+                icon: const Icon(Icons.delete),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
