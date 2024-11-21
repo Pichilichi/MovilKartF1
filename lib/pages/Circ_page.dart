@@ -80,8 +80,11 @@ class _CircPageState extends State<CircPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    // Filtro
     final circuitos = circuits
     ?.where((c) => c.category == _nameCat).toList();
+
     return Scaffold(
       backgroundColor: Colors.grey[300],
       body: Column(

@@ -20,6 +20,7 @@ class EquipPage extends StatefulWidget {
 
 class _EquipPageState extends State<EquipPage>{
 
+  var _nameCat = "GL";
   Client client = http.Client();
   List<Equipments>? eq = [];
   List<Photo>? ph = [];
@@ -58,9 +59,15 @@ class _EquipPageState extends State<EquipPage>{
 
   @override
   Widget build(BuildContext context){
+
+    final _filteredEq = eq
+    ?.where((e) => e.equipmentCategory == _nameCat).toList();
+
     return Consumer<Cart>(
       builder: (context, value, child) => Column(
+        
         children: [
+
           Container (
             padding: const EdgeInsets.all(12),
             margin: const EdgeInsets.symmetric(horizontal: 25),
@@ -68,18 +75,26 @@ class _EquipPageState extends State<EquipPage>{
               color: Colors.grey[200],
               borderRadius: BorderRadius.circular(8),
             ),
+            
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
-                  'Search',
-                  style: TextStyle(color: Colors.grey),
-                ),
-                Icon(
-                  Icons.search,
-                  color: Colors.grey,
-                ),
-              ],
+              mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              EqCat(
+                'Gloves',
+                onPressed: () => setState(() => _nameCat = "GL"),
+                selected: _nameCat == "GL",
+              ),
+              EqCat(
+                'Helmet',
+                onPressed: () => setState(() => _nameCat = "HM"),
+                selected: _nameCat == "HM",
+              ),
+              EqCat(
+                'Suits',
+                onPressed: () => setState(() => _nameCat = "RS"),
+                selected: _nameCat == "RS",
+              ),
+            ],
             ),
           ),
 
@@ -114,7 +129,7 @@ class _EquipPageState extends State<EquipPage>{
           // LIST OF EQUIPMENT FOR SALE
           Expanded(
             child: ListView.builder(
-              itemCount: eq?.length,
+              itemCount: _filteredEq?.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 return Container(
@@ -128,7 +143,7 @@ class _EquipPageState extends State<EquipPage>{
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children:[
                       Text(
-                        eq![index].name,
+                        _filteredEq![index].name,
                         style: TextStyle(color: Colors.grey[600]),
                       ),
 
@@ -145,7 +160,7 @@ class _EquipPageState extends State<EquipPage>{
 
                                 // NAME
                                 Text(
-                                  eq![index].name,
+                                  _filteredEq![index].name,
                                   style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,
@@ -156,7 +171,7 @@ class _EquipPageState extends State<EquipPage>{
 
                                 // PRICE
                                 Text(
-                                  eq![index].price.toString() + '\€' ,
+                                  _filteredEq![index].price.toString() + '\€' ,
                                   style: const TextStyle(
                                     color: Colors.grey,
                                   ),
@@ -166,7 +181,7 @@ class _EquipPageState extends State<EquipPage>{
                         
                             // BUTTON +
                             GestureDetector(
-                              onTap: () => addEquipToCart(eq![index]),
+                              onTap: () => addEquipToCart(_filteredEq![index]),
                               child: Container(
                                 padding: EdgeInsets.all(20),
                                 decoration: const BoxDecoration(
@@ -202,6 +217,35 @@ class _EquipPageState extends State<EquipPage>{
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class EqCat extends StatelessWidget {
+  final String text;
+  final bool? selected;
+  final VoidCallback onPressed;
+  const EqCat(
+    this.text, {
+    Key? key,
+    required this.onPressed,
+    this.selected,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Text(
+        '$text \n____________',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: 11,
+          color:
+              selected == true ? Theme.of(context).colorScheme.primary : null,
+          fontWeight: selected == true ? FontWeight.bold : null,
+        ),
       ),
     );
   }
