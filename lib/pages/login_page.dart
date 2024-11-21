@@ -222,9 +222,22 @@ class _RegisterPageState extends State<RegisterPage> {
             const SizedBox(height: 50),
 
             TextField(
+              obscureText: false,
+              // controller: pwdReg,
+              decoration: InputDecoration(
+                hintText: 'Fullname',
+                border: OutlineInputBorder(
+
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 20,),
+
+            TextField(
               controller: userReg,
               decoration: InputDecoration(
-                hintText: 'username',
+                hintText: 'Username',
                 border: OutlineInputBorder(
 
                 ),
@@ -238,7 +251,20 @@ class _RegisterPageState extends State<RegisterPage> {
               obscureText: true,
               controller: pwdReg,
               decoration: InputDecoration(
-                hintText: 'password',
+                hintText: 'Password',
+                border: OutlineInputBorder(
+
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 20,),
+
+            TextField(
+              obscureText: false,
+              // controller: 
+              decoration: InputDecoration(
+                hintText: 'Email',
                 border: OutlineInputBorder(
 
                 ),
