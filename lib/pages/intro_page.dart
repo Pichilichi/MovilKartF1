@@ -28,8 +28,6 @@ class _IntroPageState extends State<IntroPage>{
     //BOOKINGS
     const BookPage(),
 
-    const AddBookPage(),
-
     const CircPage(),
 
     const EquipPage(),

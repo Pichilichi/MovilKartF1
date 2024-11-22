@@ -44,11 +44,13 @@ class _CircPageState extends State<CircPage> {
   getData() async {
     circuits = await Urls().getCircuits();
     categories = await Urls().getCategories();
+
     if(circuits != null){
       setState(() {
         isLoaded = true;
       });
     }
+
     if(categories != null){
       setState(() {
         isLoaded = true;
@@ -103,7 +105,7 @@ class _CircPageState extends State<CircPage> {
             itemBuilder: (context, index) {
               return ListTile(
               title: Text(circuitos![index].name),
-              subtitle: Text(circuitos![index].km + " km"),
+              subtitle: Text(circuitos![index].km + " km" + " ${circuitos![index].latitude} ${circuitos![index].longitude}"),
               // subtitle: Text(categories![circuitos![index].category-1].name),  Devuelve el continente
                 onTap: () {
                   Navigator.push(

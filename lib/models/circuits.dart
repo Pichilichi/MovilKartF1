@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 List<Circuits> circuitsFromJson(String str) => List<Circuits>.from(json.decode(str).map((x) => Circuits.fromJson(x)));
 
@@ -11,6 +12,8 @@ class Circuits {
     String km;
     String body;
     String img;
+    double latitude;
+    double longitude;
     DateTime updated;
     DateTime created;
     int category;
@@ -22,6 +25,8 @@ class Circuits {
         required this.km,
         required this.body,
         required this.img,
+        required this.latitude,
+        required this.longitude,
         required this.updated,
         required this.created,
         required this.category,
@@ -34,6 +39,8 @@ class Circuits {
         km: json["km"],
         body: json["body"],
         img: json["img"],
+        latitude: json["latitude"],
+        longitude: json["longitude"],
         updated: DateTime.parse(json["updated"]),
         created: DateTime.parse(json["created"]),
         category: json["category"],
@@ -46,6 +53,8 @@ class Circuits {
         "km": km,
         "body": body,
         "img": img,
+        "latitude": latitude,
+        "longitude": longitude,
         "updated": updated.toIso8601String(),
         "created": created.toIso8601String(),
         "category": category,
