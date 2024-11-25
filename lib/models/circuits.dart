@@ -12,6 +12,7 @@ class Circuits {
     String km;
     String body;
     String img;
+    String flag;
     double latitude;
     double longitude;
     DateTime updated;
@@ -25,6 +26,7 @@ class Circuits {
         required this.km,
         required this.body,
         required this.img,
+        required this.flag,
         required this.latitude,
         required this.longitude,
         required this.updated,
@@ -39,6 +41,7 @@ class Circuits {
         km: json["km"],
         body: json["body"],
         img: json["img"],
+        flag: json["flag"],
         latitude: json["latitude"],
         longitude: json["longitude"],
         updated: DateTime.parse(json["updated"]),
@@ -53,6 +56,7 @@ class Circuits {
         "km": km,
         "body": body,
         "img": img,
+        "flag": flag,
         "latitude": latitude,
         "longitude": longitude,
         "updated": updated.toIso8601String(),

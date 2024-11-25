@@ -1,4 +1,5 @@
 
+import 'package:country_flags/country_flags.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
@@ -40,6 +41,9 @@ class _CircPageState extends State<CircPage> {
 
     getData();
   }
+
+  var bandera = CountryFlag.fromCountryCode('ES', 
+  shape: const Circle());
 
   getData() async {
     circuits = await Urls().getCircuits();
@@ -105,7 +109,11 @@ class _CircPageState extends State<CircPage> {
             itemBuilder: (context, index) {
               return ListTile(
               title: Text(circuitos![index].name),
-              subtitle: Text(circuitos![index].km + " km" + " ${circuitos![index].latitude} ${circuitos![index].longitude}"),
+              subtitle: Text(circuitos![index].km + " km"),
+              leading: CountryFlag.fromCountryCode(circuitos![index].flag,  //Añadir campo CountryCode a circuitos
+                shape: const RoundedRectangle(6),
+                ),
+              
               // subtitle: Text(categories![circuitos![index].category-1].name),  Devuelve el continente
                 onTap: () {
                   Navigator.push(

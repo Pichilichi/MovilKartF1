@@ -227,7 +227,7 @@ class _EquipPageState extends State<EquipPage>{
                             GestureDetector(
                               onTap: () => addEquipToCart(_filteredEq![index]),
                               child: Container(
-                                padding: EdgeInsets.all(20),
+                                padding: EdgeInsets.all(25),
                                 decoration: const BoxDecoration(
                                   color: Colors.black,
                                   borderRadius: BorderRadius.only(
