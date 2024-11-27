@@ -68,11 +68,6 @@ class _BookPageState extends State<BookPage> {
     
   }
 
-  getUsers() async{
-    
-  }
-
-
   getMsg() async {
     msg = await Urls().getMessages();
     if(msg != null){
@@ -83,19 +78,26 @@ class _BookPageState extends State<BookPage> {
   
   }
 
-  getMes(int index){
-    var M;
-    for(int i = 0; i < msg!.length; i++){
-      if(msg!.isNotEmpty){
-        M = msg!.where((x) => books![index].id == msg![i].booking).toList();
-        //print(M[i].body);
-      }else{
-        print("AQUI");
-      }
+  // getMes(int index){
+  //   var M;
+  //   for(int i = 0; i < msg!.length; i++){
+  //     // if(msg!.isNotEmpty){
+  //       print("id booking selec ${books![index].id}");
+  //       print("id msg book selec ${msg![i].booking}");
+  //       M = msg!.where((x) => books![index].id == msg![i].booking).toList();
+  //       //print(M[i].body);
+  //     // }else{
+  //     //   print("AQUI");
+  //     // }
         
-    }
-    return M;
-  }
+  //   }
+    
+  //   for(int i = 0; i < M.length; i++){
+  //     print(M[i].body);
+  //   }
+
+  //   return M;
+  // }
 
   // _retrieveEvents() async {
   //   events = [];
@@ -149,16 +151,16 @@ class _BookPageState extends State<BookPage> {
               title: Text(books![index].name),
               subtitle: Text(books![index].id.toString()),
               onTap: () {
-                getMes(index);
+                //getMes(index);
                 // print("Aquiii");
                 // print(mensajes[index].body);
-                // print(getMes(index));
-                print(users);
+                //print(getMes(index));
+                // print(users);
                 
                 Navigator.push(
                   context, 
                   MaterialPageRoute(
-                    builder: (context) => bookSelectedPage(b: books![index], m: getMes(index), u: users),
+                    builder: (context) => bookSelectedPage(b: books![index], m: msg, u: users),
                   ),
                 );
               },

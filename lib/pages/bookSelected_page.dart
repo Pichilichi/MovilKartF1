@@ -15,12 +15,24 @@ class bookSelectedPage extends StatelessWidget {
   allMesagges(){
     List<Messages> M = [];
     for(int i = 0; i < m.length; i++){
+      
+      if(b.id == m[i].booking){
+        //print("ID BOOKING ${b.id}");
+        //print("id msg ${m[i].booking}");
+        M.add(m[i]);
+      }
+
+      // if(M.isEmpty){
+        
+      // }
+        
+      
       //print(m[i]);
-      M.add(m[i]);
+     
       //print(M[i].body);
       
     }
-    print(M);
+    // print(M);
     return M;
 
     
@@ -57,7 +69,6 @@ class bookSelectedPage extends StatelessWidget {
 
                   TextButton(
                     onPressed: () {
-                      allMesagges();
                       Navigator.pop(context);
                       Navigator.push(context, MaterialPageRoute(builder: (context) => IntroPage()));
                       // el borrarlo de la api
@@ -70,6 +81,7 @@ class bookSelectedPage extends StatelessWidget {
           }, icon: const Icon (Icons.delete))
         ],
       ),
+      
       body: Column(
         children: [
           Expanded(
