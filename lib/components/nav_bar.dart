@@ -10,10 +10,10 @@ class MyNavBar extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 20),
       child: GNav(
-        color: Colors.grey[400],
-        activeColor: Colors.grey.shade700,
-        tabActiveBorder: Border.all(color: Colors.white),
-        tabBackgroundColor: Colors.grey.shade100,
+        color: Colors.black,
+        activeColor: Colors.black54,
+        tabActiveBorder: Border.all(color: Colors.blueAccent),
+        tabBackgroundColor: Colors.blue.shade100,
         mainAxisAlignment: MainAxisAlignment.center,
         tabBorderRadius: 5,
         gap: 4,
@@ -21,19 +21,18 @@ class MyNavBar extends StatelessWidget {
         tabs: const [
           GButton(
             icon: Icons.home,
-            text: 'Bookings',
           ),
           GButton(
             icon: Icons.art_track,
-            text: 'Circuits',
+//            text: 'Circuits',
           ),
           GButton(
             icon: Icons.shopping_bag_rounded,
-            text: 'Shop',
+ //           text: 'Shop',
           ),
           GButton(
             icon: Icons.shopping_cart,
-            text: 'Cart',
+  //          text: 'Cart',
           ),
         ],
       ),

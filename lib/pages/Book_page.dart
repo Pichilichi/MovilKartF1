@@ -9,7 +9,9 @@ import 'package:http/http.dart';
 import 'package:kartf1/models/bookings.dart';
 import 'package:kartf1/models/messages.dart';
 import 'package:kartf1/django/urls.dart';
+import 'package:kartf1/models/users.dart';
 import 'package:kartf1/pages/bookSelected_page.dart';
+import 'package:kartf1/pages/intro_page.dart';
 
 
 class BookPage extends StatefulWidget{
@@ -34,6 +36,9 @@ class _BookPageState extends State<BookPage> {
   Client client = http.Client();
   List<Booking>? books = [];
   List<Messages>? msg = [];
+  List<Users>? users = [];
+
+  List<Messages> mensajes = [];
   var isLoaded = false;
 
   @override
@@ -52,7 +57,21 @@ class _BookPageState extends State<BookPage> {
         isLoaded = true;
       });
     }
+
+    users = await Urls().getUsers();
+    if(users != null){
+      setState(() {
+        isLoaded = true;
+      });
+    }
+
+    
   }
+
+  getUsers() async{
+    
+  }
+
 
   getMsg() async {
     msg = await Urls().getMessages();
@@ -61,6 +80,16 @@ class _BookPageState extends State<BookPage> {
         isLoaded = true;
       });
     }
+  
+  }
+
+  getMes(int index){
+    var M;
+    for(int i = 0; i < msg!.length; i++){
+      M = msg!.where((x) => books![index].id == msg![i].booking).toList();
+      print(M[i].body);
+    }
+    return M;
   }
 
   // _retrieveEvents() async {
@@ -113,11 +142,18 @@ class _BookPageState extends State<BookPage> {
           itemBuilder: (context, index) {
             return ListTile(
               title: Text(books![index].name),
+              subtitle: Text(books![index].id.toString()),
               onTap: () {
+                getMes(index);
+                // print("Aquiii");
+                // print(mensajes[index].body);
+                // print(getMes(index));
+                print(users);
+                
                 Navigator.push(
                   context, 
                   MaterialPageRoute(
-                    builder: (context) => bookSelectedPage(b: books![index]),
+                    builder: (context) => bookSelectedPage(b: books![index], m: getMes(index), u: users),
                   ),
                 );
               },
@@ -267,7 +303,6 @@ class _AddBookPageState extends State<AddBookPage>{
         var data = jsonDecode(response.body.toString());
         print('data added');
         print(data);
-        Navigator.push(context, MaterialPageRoute(builder: (context) => BookPage()));
         Navigator.push(context, MaterialPageRoute(builder: (context) => IntroPage()));
         // IntroPage(), prueba a ver si sale la barra de abajo asi
       }else{
