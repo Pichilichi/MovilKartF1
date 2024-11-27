@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:kartf1/models/bookings.dart';
 import 'package:kartf1/models/messages.dart';
 import 'package:kartf1/models/users.dart';
@@ -15,28 +16,13 @@ class bookSelectedPage extends StatelessWidget {
   allMesagges(){
     List<Messages> M = [];
     for(int i = 0; i < m.length; i++){
-      
       if(b.id == m[i].booking){
-        //print("ID BOOKING ${b.id}");
-        //print("id msg ${m[i].booking}");
         M.add(m[i]);
       }
-
-      // if(M.isEmpty){
-        
-      // }
-        
-      
-      //print(m[i]);
-     
-      //print(M[i].body);
-      
     }
-    // print(M);
     return M;
-
-    
   }
+
 
   getUser(List <Users>? user, int id){
     for(int i = 0; i < user!.length; i++){
@@ -82,7 +68,8 @@ class bookSelectedPage extends StatelessWidget {
         ],
       ),
       
-      body: Column(
+      body:  M.isNotEmpty 
+      ? Column(
         children: [
           Expanded(
             child: ListView.builder(
@@ -96,12 +83,8 @@ class bookSelectedPage extends StatelessWidget {
               },
             ),
           ),
-          
-
         ],
-         
-      ),
-      
+      ) : const Center(child: Text("Nothing here, man"))
     );
   }
 }
