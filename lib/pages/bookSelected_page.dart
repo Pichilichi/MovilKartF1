@@ -84,8 +84,7 @@ class bookSelectedPage extends StatelessWidget {
               },
             ),
           ),
-          Text("Number of participants: ${b.racers.length} "),
-          Text("${M}"),
+          
 
         ],
          

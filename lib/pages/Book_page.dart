@@ -86,8 +86,13 @@ class _BookPageState extends State<BookPage> {
   getMes(int index){
     var M;
     for(int i = 0; i < msg!.length; i++){
-      M = msg!.where((x) => books![index].id == msg![i].booking).toList();
-      print(M[i].body);
+      if(msg!.isNotEmpty){
+        M = msg!.where((x) => books![index].id == msg![i].booking).toList();
+        //print(M[i].body);
+      }else{
+        print("AQUI");
+      }
+        
     }
     return M;
   }
