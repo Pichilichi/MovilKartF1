@@ -10,11 +10,12 @@ import 'package:kartf1/pages/intro_page.dart';
 
 class bookSelectedPage extends StatelessWidget {
   const bookSelectedPage({super.key, required this.b, required this.m, 
-  required this.u,});
+  required this.u, required this.currentUser});
 
   final Booking b;
   final m;
   final List <Users>? u;
+  final Users currentUser;
   // final List <Users>? currentUser;
 
   allMesagges(){
@@ -36,7 +37,20 @@ class bookSelectedPage extends StatelessWidget {
     }
   }
 
-  
+  Future<void> deleteBooking() async {
+    try{
+      Response response = await delete(
+        Uri.parse("https://pacou.pythonanywhere.com/bookings/${b.id}")
+      );
+
+      if(response.statusCode == 204){
+        print("Borrado");
+      }
+      
+    }catch(e){
+      print(e);
+    }
+  }
 
 
   @override
@@ -47,8 +61,8 @@ class bookSelectedPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(b.name),
         actions: [
-          IconButton( onPressed: 
-          () {
+          IconButton( onPressed: currentUser.id == b.user 
+          ? () {
             showDialog(
               context: context,
               builder: (context) => AlertDialog(
@@ -62,12 +76,26 @@ class bookSelectedPage extends StatelessWidget {
 
                   TextButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      deleteBooking();
                       Navigator.push(context, MaterialPageRoute(builder: (context) => IntroPage()));
                       // el borrarlo de la api
                     },
                     child: Text(b.id.toString())
                   ), //id del booking para borrarlo
+                ],
+              )
+            );
+          } : () {
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: const Text ("You cant delete this"),
+                actions: [
+
+                  TextButton(
+                    onPressed: () => Navigator.pop(context), 
+                    child: const Text("Ups! Sorry")
+                  ),
                 ],
               )
             );
@@ -88,6 +116,7 @@ class bookSelectedPage extends StatelessWidget {
           //   );
           // },    
           icon: const Icon (Icons.delete)),
+
           IconButton(
           icon: Icon(Icons.add), 
           onPressed: (){
