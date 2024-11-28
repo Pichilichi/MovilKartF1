@@ -338,6 +338,21 @@ class _AddBookPageState extends State<AddBookPage>{
     }
   }
 
+  DateTime selectedDate = DateTime.now();
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2015, 8),
+        lastDate: DateTime(2101));
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+      });
+    }
+  }
+
 
 
 
@@ -364,6 +379,7 @@ class _AddBookPageState extends State<AddBookPage>{
         // IntroPage(), prueba a ver si sale la barra de abajo asi
       }else{
         print('failed');
+        print(selectedDate);
         showDialog(
           context: context, 
           builder: (context) => AlertDialog(
@@ -426,15 +442,22 @@ class _AddBookPageState extends State<AddBookPage>{
             const SizedBox(height: 20,),
 
 
-            TextField(
-              controller: raceDayBook,
-              decoration: InputDecoration(
-                hintText: 'YYYY-MM-DD',
-                border: OutlineInputBorder(
-
-                ),
-              ),
+            ElevatedButton(
+              onPressed: () => _selectDate(context),
+              child: const Text('Select date'),
+              
             ),
+            
+
+            // TextField(
+            //   controller: raceDayBook,
+            //   decoration: InputDecoration(
+            //     hintText: 'YYYY-MM-DD',
+            //     border: OutlineInputBorder(
+
+            //     ),
+            //   ),
+            // ),
 
             DropdownButton(
               hint: Text("Choose the circuit"),
@@ -467,7 +490,7 @@ class _AddBookPageState extends State<AddBookPage>{
             const SizedBox(height: 20,),
             GestureDetector(
               onTap: () {
-                addBooking(nameBook.text.toString(), raceDayBook.text.toString(), 
+                addBooking(nameBook.text.toString(), selectedDate.toString().split(' ')[0], 
                 cU.id.toString(), dropdownvalue.toString());
                 // Navigator.push(context, MaterialPageRoute(builder: (context) => IntroPage())); 
               },
