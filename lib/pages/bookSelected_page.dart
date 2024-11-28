@@ -77,10 +77,11 @@ class bookSelectedPage extends StatelessWidget {
                   TextButton(
                     onPressed: () {
                       deleteBooking();
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => IntroPage()));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const IntroPage()));
+                      
                       // el borrarlo de la api
                     },
-                    child: Text(b.id.toString())
+                    child: Text("Delete")
                   ), //id del booking para borrarlo
                 ],
               )

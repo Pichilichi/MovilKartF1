@@ -25,7 +25,7 @@ class BookPage extends StatefulWidget{
 }
 
 class AddBookPage extends StatefulWidget {
-  const AddBookPage({super.key});
+  const AddBookPage({super.key,});
 
   @override
   _AddBookPageState createState() => _AddBookPageState();
@@ -86,6 +86,14 @@ class _BookPageState extends State<BookPage> {
       });
     }
   
+  }
+
+  getUser(List <Users>? user, int id){
+    for(int i = 0; i < user!.length; i++){
+      if(id == user[i].id){
+        return user[i].username;
+      }
+    }
   }
 
   // getMes(int index){
@@ -159,7 +167,7 @@ class _BookPageState extends State<BookPage> {
           itemBuilder: (context, index) {
             return ListTile(
               title: Text(books![index].name),
-              subtitle: Text(books![index].id.toString()),
+              subtitle: Text(" ${getUser(users, books![index].user)} "),
               onTap: () {
                 //getMes(index);
                 // print("Aquiii");
@@ -302,7 +310,8 @@ class _BookPageState extends State<BookPage> {
   
 class _AddBookPageState extends State<AddBookPage>{
 
-  
+  Users cU = Urls.getUser();
+
 
   void addBooking(String bookName, raceDay, user, circuit) async{
 
@@ -342,7 +351,6 @@ class _AddBookPageState extends State<AddBookPage>{
 
   TextEditingController nameBook = TextEditingController();
   TextEditingController raceDayBook = TextEditingController();
-  TextEditingController userBook = TextEditingController();
   TextEditingController circuitBook = TextEditingController();
 
   @override
@@ -398,15 +406,6 @@ class _AddBookPageState extends State<AddBookPage>{
               ),
             ),
 
-             TextField(
-              controller: userBook,
-              decoration: InputDecoration(
-                hintText: 'user',
-                border: OutlineInputBorder(
-
-                ),
-              ),
-            ),
 
             TextField(
               controller: circuitBook,
@@ -421,7 +420,7 @@ class _AddBookPageState extends State<AddBookPage>{
             GestureDetector(
               onTap: () {
                 addBooking(nameBook.text.toString(), raceDayBook.text.toString(), 
-                userBook.text.toString(), circuitBook.text.toString());
+                cU.id.toString(), circuitBook.text.toString());
                 // Navigator.push(context, MaterialPageRoute(builder: (context) => IntroPage())); 
               },
               child: Container(

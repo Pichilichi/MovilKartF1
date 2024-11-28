@@ -16,6 +16,7 @@ class IntroPage extends StatefulWidget {
 } 
 
 class _IntroPageState extends State<IntroPage>{
+
   int _selectedIndex = 0;
 
   void navBottomBar(int index){
