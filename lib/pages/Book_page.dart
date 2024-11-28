@@ -13,6 +13,8 @@ import 'package:kartf1/models/users.dart';
 import 'package:kartf1/pages/bookSelected_page.dart';
 import 'package:kartf1/pages/intro_page.dart';
 
+import '../models/circuits.dart';
+
 
 class BookPage extends StatefulWidget{
   const BookPage({Key? key}) : super(key: key);
@@ -311,6 +313,32 @@ class _BookPageState extends State<BookPage> {
 class _AddBookPageState extends State<AddBookPage>{
 
   Users cU = Urls.getUser();
+  List circuits = [];
+
+  @override
+  void initState(){
+    // _retrieveEvents();
+    super.initState();
+
+    getData();
+  }
+
+  var isLoaded = false;
+
+  getData() async {
+    var baseUrl = 'https://pacou.pythonanywhere.com/circuits/';
+
+    http.Response response = await http.get(Uri.parse(baseUrl));
+
+    if (response.statusCode == 200) {
+      var jsonData = json.decode(response.body);
+      setState(() {
+        circuits = jsonData;
+      });
+    }
+  }
+
+
 
 
   void addBooking(String bookName, raceDay, user, circuit) async{
@@ -352,6 +380,8 @@ class _AddBookPageState extends State<AddBookPage>{
   TextEditingController nameBook = TextEditingController();
   TextEditingController raceDayBook = TextEditingController();
   TextEditingController circuitBook = TextEditingController();
+
+  var dropdownvalue;
 
   @override
   Widget build(BuildContext context) {
@@ -406,21 +436,39 @@ class _AddBookPageState extends State<AddBookPage>{
               ),
             ),
 
-
-            TextField(
-              controller: circuitBook,
-              decoration: InputDecoration(
-                hintText: 'Circuit',
-                border: OutlineInputBorder(
-
-                ),
-              ),
+            DropdownButton(
+              hint: Text("Choose the circuit"),
+              icon: const Icon(Icons.keyboard_arrow_down),
+              items: circuits.map((item) {
+              return DropdownMenuItem(
+                value: item['id'].toString(),
+                child: Text(item['name']),
+              );
+            }).toList(),
+             onChanged: (newVal) {
+                setState(() {
+                  print(dropdownvalue);
+                  dropdownvalue = newVal;
+                });
+              },
+              value: dropdownvalue,
             ),
+
+            
+            // TextField(
+            //   controller: circuitBook,
+            //   decoration: InputDecoration(
+            //     hintText: 'Circuit',
+            //     border: OutlineInputBorder(
+
+            //     ),
+            //   ),
+            // ),
             const SizedBox(height: 20,),
             GestureDetector(
               onTap: () {
                 addBooking(nameBook.text.toString(), raceDayBook.text.toString(), 
-                cU.id.toString(), circuitBook.text.toString());
+                cU.id.toString(), dropdownvalue.toString());
                 // Navigator.push(context, MaterialPageRoute(builder: (context) => IntroPage())); 
               },
               child: Container(
