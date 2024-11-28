@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:kartf1/models/bookings.dart';
@@ -7,11 +9,13 @@ import 'package:kartf1/pages/Book_page.dart';
 import 'package:kartf1/pages/intro_page.dart';
 
 class bookSelectedPage extends StatelessWidget {
-  const bookSelectedPage({super.key, required this.b, required this.m, required this.u});
+  const bookSelectedPage({super.key, required this.b, required this.m, 
+  required this.u,});
 
   final Booking b;
   final m;
   final List <Users>? u;
+  // final List <Users>? currentUser;
 
   allMesagges(){
     List<Messages> M = [];
@@ -32,6 +36,8 @@ class bookSelectedPage extends StatelessWidget {
     }
   }
 
+  
+
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +47,8 @@ class bookSelectedPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(b.name),
         actions: [
-          IconButton(onPressed: () {
+          IconButton( onPressed: 
+          () {
             showDialog(
               context: context,
               builder: (context) => AlertDialog(
@@ -64,7 +71,29 @@ class bookSelectedPage extends StatelessWidget {
                 ],
               )
             );
-          }, icon: const Icon (Icons.delete))
+          },
+          // } currentUser?[0].id == b.user : () {
+          //   showDialog(
+          //     context: context,
+          //     builder: (context) => AlertDialog(
+          //       title: const Text ("You cant delete this"),
+          //       actions: [
+
+          //         TextButton(
+          //           onPressed: () => Navigator.pop(context), 
+          //           child: const Text("Cancel")
+          //         ),
+          //       ],
+          //     )
+          //   );
+          // },    
+          icon: const Icon (Icons.delete)),
+          IconButton(
+          icon: Icon(Icons.add), 
+          onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context) => AddMsgPage(b : b)));
+          },
+         ),
         ],
       ),
       
@@ -84,7 +113,133 @@ class bookSelectedPage extends StatelessWidget {
             ),
           ),
         ],
-      ) : const Center(child: Text("Nothing here, man"))
+      ) : const Center(child: Text("Nothing here, man")
+      ),
+      
     );
   }
+}
+
+class AddMsgPage extends StatefulWidget {
+  const AddMsgPage({super.key, required this.b});
+
+  final Booking b;
+
+  @override
+  _AddMsgPageState createState() => _AddMsgPageState();
+
+}
+
+class _AddMsgPageState extends State<AddMsgPage>{
+
+
+void addMsg(String bodyMsg, bookingId) async{
+
+    try{
+
+      print("dentro del response");
+      Response response = await post(
+        Uri.parse('https://pacou.pythonanywhere.com/messages/'),
+        body: {
+          'body': bodyMsg,
+          'user': 11.toString(),
+          'booking': bookingId.toString(),
+        }
+      );
+
+      if(response.statusCode == 201){
+        var data = jsonDecode(response.body.toString());
+        print('data added');
+        print(data);
+        Navigator.push(context, MaterialPageRoute(builder: (context) => IntroPage()));
+        // IntroPage(), prueba a ver si sale la barra de abajo asi
+      }else{
+        print('failed');
+        showDialog(
+          context: context, 
+          builder: (context) => AlertDialog(
+            title: Text('Something went wrong...'),
+            content: Text('Check the data'),
+          ),
+        );
+      }
+    }catch(e){
+      print(e.toString());
+    }
+  }
+
+  TextEditingController bodyMsg = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(" Add a message! "),
+        actions: [
+          IconButton(
+          icon: Icon(Icons.arrow_back), 
+          onPressed: (){
+            Navigator.pop(context, MaterialPageRoute(builder: (context) => IntroPage()));
+          },
+         ),
+        ],
+        
+        titleTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: Colors.black),
+        backgroundColor: Colors.grey[300],
+        automaticallyImplyLeading: false, // cambia lo del boton hacia atras (testear)
+        scrolledUnderElevation: 0.0, // la barra superior deberia ser 100% transparente ahora
+        elevation: 0,
+      ),
+      
+      backgroundColor: Colors.grey[300],
+      body: Padding(
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(height: 50),
+
+            TextField(
+              controller: bodyMsg,
+              decoration: InputDecoration(
+                hintText: 'Leave a comment!',
+                border: OutlineInputBorder(
+
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 20,),
+
+            const SizedBox(height: 20,),
+            GestureDetector(
+              onTap: () {
+                addMsg(bodyMsg.text.toString(), widget.b.id);
+                // Navigator.push(context, MaterialPageRoute(builder: (context) => IntroPage())); 
+              },
+              child: Container(
+                height: 60,
+                width: 300,
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: const Center(
+                  child: Text(
+                    'Add Booking', 
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
 }
