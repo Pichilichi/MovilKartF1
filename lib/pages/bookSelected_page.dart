@@ -44,7 +44,7 @@ class bookSelectedPage extends StatelessWidget {
       );
 
       if(response.statusCode == 204){
-        print("Borrado");
+        //print("Borrado");
       }
       
     }catch(e){
@@ -52,6 +52,7 @@ class bookSelectedPage extends StatelessWidget {
     }
   }
 
+  
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +60,9 @@ class bookSelectedPage extends StatelessWidget {
     // Use the Todo to create the UI.
     return Scaffold(
       appBar: AppBar(
-        title: Text(b.name),
+        backgroundColor: Colors.white,
+        title: Text(b.name + " " + b.raceDay.day.toString() + "/" + b.raceDay.month.toString()),
+        titleTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: Colors.black),
         actions: [
           IconButton( onPressed: currentUser.id == b.user 
           ? () {
@@ -75,9 +78,13 @@ class bookSelectedPage extends StatelessWidget {
                   ),
 
                   TextButton(
-                    onPressed: () {
+                    onPressed: () async {
                       deleteBooking();
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const IntroPage()));
+                      final sb = SnackBar(content: 
+                      Text("Booking deleted!"),
+                      duration: const Duration(milliseconds: 2000),);
+                      ScaffoldMessenger.of(context).showSnackBar(sb);
+                      await Navigator.push(context, MaterialPageRoute(builder: (context) => const IntroPage()));
                       
                       // el borrarlo de la api
                     },
@@ -101,6 +108,9 @@ class bookSelectedPage extends StatelessWidget {
               )
             );
           },
+
+          
+          
           // } currentUser?[0].id == b.user : () {
           //   showDialog(
           //     context: context,
@@ -121,12 +131,13 @@ class bookSelectedPage extends StatelessWidget {
           IconButton(
           icon: Icon(Icons.add), 
           onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => AddMsgPage(b : b)));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => AddMsgPage(b : b, currentUser: currentUser,)));
           },
          ),
         ],
       ),
       
+      backgroundColor: Colors.white,
       body:  M.isNotEmpty 
       ? Column(
         children: [
@@ -151,9 +162,10 @@ class bookSelectedPage extends StatelessWidget {
 }
 
 class AddMsgPage extends StatefulWidget {
-  const AddMsgPage({super.key, required this.b});
+  const AddMsgPage({super.key, required this.b, required this.currentUser});
 
   final Booking b;
+  final Users currentUser;
 
   @override
   _AddMsgPageState createState() => _AddMsgPageState();
@@ -163,7 +175,7 @@ class AddMsgPage extends StatefulWidget {
 class _AddMsgPageState extends State<AddMsgPage>{
 
 
-void addMsg(String bodyMsg, bookingId) async{
+void addMsg(String bodyMsg, bookingId, currentUserId) async{
 
     try{
 
@@ -172,7 +184,7 @@ void addMsg(String bodyMsg, bookingId) async{
         Uri.parse('https://pacou.pythonanywhere.com/messages/'),
         body: {
           'body': bodyMsg,
-          'user': 11.toString(),
+          'user': currentUserId.toString(),
           'booking': bookingId.toString(),
         }
       );
@@ -181,6 +193,7 @@ void addMsg(String bodyMsg, bookingId) async{
         var data = jsonDecode(response.body.toString());
         print('data added');
         print(data);
+        
         Navigator.push(context, MaterialPageRoute(builder: (context) => IntroPage()));
         // IntroPage(), prueba a ver si sale la barra de abajo asi
       }else{
@@ -199,6 +212,9 @@ void addMsg(String bodyMsg, bookingId) async{
   }
 
   TextEditingController bodyMsg = TextEditingController();
+  // final _sbCreated = SnackBar(content: 
+  //   Text("Booking created!"),
+  //   duration: const Duration(milliseconds: 2000),);
 
   @override
   Widget build(BuildContext context) {
@@ -215,13 +231,13 @@ void addMsg(String bodyMsg, bookingId) async{
         ],
         
         titleTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: Colors.black),
-        backgroundColor: Colors.grey[300],
+        backgroundColor: Colors.white,
         automaticallyImplyLeading: false, // cambia lo del boton hacia atras (testear)
         scrolledUnderElevation: 0.0, // la barra superior deberia ser 100% transparente ahora
         elevation: 0,
       ),
       
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(8),
         child: Column(
@@ -245,7 +261,7 @@ void addMsg(String bodyMsg, bookingId) async{
             const SizedBox(height: 20,),
             GestureDetector(
               onTap: () {
-                addMsg(bodyMsg.text.toString(), widget.b.id);
+                addMsg(bodyMsg.text.toString(), widget.b.id, widget.currentUser.id);
                 // Navigator.push(context, MaterialPageRoute(builder: (context) => IntroPage())); 
               },
               child: Container(
@@ -257,7 +273,7 @@ void addMsg(String bodyMsg, bookingId) async{
                 ),
                 child: const Center(
                   child: Text(
-                    'Add Booking', 
+                    'Add message', 
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,

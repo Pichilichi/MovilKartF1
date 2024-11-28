@@ -57,8 +57,11 @@ class circuitSelectedPage extends StatelessWidget {
     // Use the Todo to create the UI.
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: Text(c.name),
+        titleTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: Colors.black),
       ),
+      backgroundColor: Colors.white,
       body: Column(
         children: [
           Image.network("https://pacou.pythonanywhere.com${c.img}"),

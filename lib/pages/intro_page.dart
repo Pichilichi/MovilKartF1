@@ -45,10 +45,12 @@ class _IntroPageState extends State<IntroPage>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      
+      backgroundColor: Colors.white,
       bottomNavigationBar: MyNavBar(
         onTabChange: (index)=> navBottomBar(index),
       ),
+      
       body: _pages[_selectedIndex],
     );
       // appBar: AppBar(

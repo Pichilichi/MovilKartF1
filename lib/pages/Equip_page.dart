@@ -67,7 +67,7 @@ class _EquipPageState extends State<EquipPage>{
     return Consumer<Cart>(
       builder: (context, value, child) => Scaffold(
 
-        backgroundColor: Colors.grey[300],
+        backgroundColor: Colors.white,
         appBar: AppBar(
         title: Text("Shop"),
         // actions: [
@@ -80,7 +80,7 @@ class _EquipPageState extends State<EquipPage>{
         // ],
         
         titleTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: Colors.black),
-        backgroundColor: Colors.grey[300],
+        backgroundColor: Colors.white,
         automaticallyImplyLeading: false, // cambia lo del boton hacia atras (testear)
         scrolledUnderElevation: 0.0, // la barra superior deberia ser 100% transparente ahora
         elevation: 0,
@@ -95,7 +95,7 @@ class _EquipPageState extends State<EquipPage>{
             padding: const EdgeInsets.all(12),
             margin: const EdgeInsets.symmetric(horizontal: 25),
             decoration: BoxDecoration(
-              color: Colors.grey[200],
+              color: Colors.white,
               borderRadius: BorderRadius.circular(8),
             ),
             
@@ -126,7 +126,7 @@ class _EquipPageState extends State<EquipPage>{
             padding: const EdgeInsets.symmetric(vertical: 25.0),
             child: Text(
               'The best equipment for your races!',  
-              style: TextStyle(color: Colors.grey[600]),
+              style: TextStyle(color: Colors.black),
             ),
           ),
 
@@ -170,7 +170,7 @@ class _EquipPageState extends State<EquipPage>{
                       aspectRatio: 1,
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.secondary,
+                          color: Colors.indigo,
                           borderRadius: BorderRadius.circular(12),
                         ),
                         width: double.infinity,

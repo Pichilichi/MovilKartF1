@@ -42,8 +42,8 @@ class _CircPageState extends State<CircPage> {
     getData();
   }
 
-  var bandera = CountryFlag.fromCountryCode('ES', 
-  shape: const Circle());
+  // var bandera = CountryFlag.fromCountryCode('ES', 
+  // shape: const Circle());
 
   getData() async {
     circuits = await Urls().getCircuits();
@@ -92,11 +92,11 @@ class _CircPageState extends State<CircPage> {
     ?.where((c) => c.category == _nameCat).toList();
 
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text("Circuits"),
         titleTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: Colors.black),
-        backgroundColor: Colors.grey[300],
+        backgroundColor: Colors.white,
         automaticallyImplyLeading: false, // cambia lo del boton hacia atras (testear)
         scrolledUnderElevation: 0.0, // la barra superior deberia ser 100% transparente ahora
         elevation: 0,
@@ -110,6 +110,8 @@ class _CircPageState extends State<CircPage> {
               return ListTile(
               title: Text(circuitos![index].name),
               subtitle: Text(circuitos![index].km + " km"),
+              tileColor: Colors.grey[100],
+              
               leading: CountryFlag.fromCountryCode(circuitos![index].flag,  //Añadir campo CountryCode a circuitos
                 shape: const RoundedRectangle(6),
                 ),
@@ -230,7 +232,7 @@ class CatButton extends StatelessWidget {
         style: TextStyle(
           fontSize: 11,
           color:
-              selected == true ? Theme.of(context).colorScheme.primary : null,
+              selected == true ? Colors.indigo : null,
           fontWeight: selected == true ? FontWeight.bold : null,
         ),
       ),

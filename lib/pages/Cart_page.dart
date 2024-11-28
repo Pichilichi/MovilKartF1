@@ -12,7 +12,7 @@ class CartPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<Cart>(
       builder: (context, value, child) => Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.white,
 
         appBar: AppBar(
         title: Text("Cart"),
@@ -26,7 +26,7 @@ class CartPage extends StatelessWidget {
         // ],
         
         titleTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: Colors.black),
-        backgroundColor: Colors.grey[300],
+        backgroundColor: Colors.white,
         automaticallyImplyLeading: false, // cambia lo del boton hacia atras (testear)
         scrolledUnderElevation: 0.0, // la barra superior deberia ser 100% transparente ahora
         elevation: 0,
@@ -44,15 +44,16 @@ class CartPage extends StatelessWidget {
             const SizedBox(height: 20),
 
             Expanded(
-              child: ListView.builder(
+              child: value.getUserCart().length > 0 
+                ? ListView.builder(
                 itemCount: value.getUserCart().length,
-                itemBuilder: (context, index) {
+                itemBuilder:  (context, index) {
                   
                   Equipments eq = value.getUserCart()[index];
 
                   return CartItem(equip: eq,);
-                },
-              ),
+                } 
+              ) : const Center( child : (Text("Wow! So empty"))),
             ),
 
             // Payment button. If cart empty, shows message and doesnt change pages
@@ -92,6 +93,8 @@ class CartPage extends StatelessWidget {
                   ),
                 )
             ),
+
+            const SizedBox(height: 5),
           ]  
         ),
         ),

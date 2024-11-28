@@ -142,13 +142,13 @@ class _BookPageState extends State<BookPage> {
         ],
         
         titleTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: Colors.black),
-        backgroundColor: Colors.grey[300],
+        backgroundColor: Colors.white,
         automaticallyImplyLeading: false, // cambia lo del boton hacia atras (testear)
         scrolledUnderElevation: 0.0, // la barra superior deberia ser 100% transparente ahora
         elevation: 0,
       ),
       
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.white,
       body: Visibility(
         visible: isLoaded,
 

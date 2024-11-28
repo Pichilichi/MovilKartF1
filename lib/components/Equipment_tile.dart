@@ -12,7 +12,7 @@ class EquipmentTile extends StatelessWidget{
       margin: EdgeInsets.only(left: 25),
       width: 280,
       decoration: BoxDecoration(
-        color: Colors.grey[100],
+        color: Colors.white,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(

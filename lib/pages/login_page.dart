@@ -88,7 +88,7 @@ login(String user, password) async{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(8),
         child: Column(
@@ -228,7 +228,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(8),
         child: Column(
