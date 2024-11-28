@@ -1,8 +1,12 @@
 import 'dart:convert';
 
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:kartf1/pages/intro_page.dart';
+
+import '../django/urls.dart';
+import '../models/users.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -26,11 +30,15 @@ class _LoginPageState extends State<LoginPage>{
   TextEditingController userController = TextEditingController();
   TextEditingController pwdController = TextEditingController();
   
+  Urls u = Urls();
+  
   get existe => null;
 
 
 
-void login(String user, password) async{
+login(String user, password) async{
+
+ 
 
   try{
 
@@ -42,11 +50,24 @@ void login(String user, password) async{
       }
     );
 
+
     if(response.statusCode == 200){
-      var data = jsonDecode(response.body.toString());
-      print('account logged');
-      // print(data);
+      var data = jsonDecode(response.body);
+      // print('account logged');
+      // print(data.keys);
+      List l = data.values.toList();
+      print("listado");
+      print(data);
+      print(l);
+      int id = l[0];
+      String name = l[1];
+      print(name);
+      // for(var key ){
+      // print (usersFromJson(data));
+
+      // }
       Navigator.push(context, MaterialPageRoute(builder: (context) => IntroPage()));
+      u.setUser(name,id);
     }else{
       print('failed');
       showDialog(

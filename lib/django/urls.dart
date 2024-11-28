@@ -1,7 +1,5 @@
 import 'package:kartf1/models/bookings.dart';
 import 'package:http/http.dart' as http;
-import 'package:kartf1/models/messages.dart';
-import 'package:kartf1/models/users.dart';
 // import 'dart:convert';
 import 'dart:async';
 
@@ -9,9 +7,13 @@ import '../models/categories.dart';
 import '../models/circuits.dart';
 import '../models/equipments.dart';
 import '../models/karts.dart';
+import '../models/messages.dart';
+import '../models/users.dart';
 
 // CLASS WITH ALL THE CALLS TO THE ENDPOINTS
 class Urls{
+
+  static Users? currentUser;
 
   //BOOKINGS
   Future<List<Booking>?> getBookings() async {  
@@ -95,6 +97,42 @@ class Urls{
       return usersFromJson(json);
     }
   }
+
+  // Future<List<Users>?> getUser() async {
+  //   var client = http.Client();
+
+  //   var uri = Uri.parse('https://pacou.pythonanywhere.com/user/');
+  //   var response = await client.get(uri);
+  //   if(response.statusCode == 200){
+  //     var json = response.body;
+  //     return usersFromJson(json);
+  //   }
+  // }
+
+  setUser(String user, int id) {
+    currentUser = Users(id : id, username : user);
+    print("desde urls.dart");
+    print(currentUser?.username);
+    print(currentUser?.id);
+    print(getUser());
+  }
+
+  static getUser()  {
+    return currentUser;
+  }
+
+ 
+
+  // Future<List<Users>?> getCurrentUser() async {
+  //   var client = http.Client();
+
+  //   var uri = Uri.parse('https://pacou.pythonanywhere.com/user/');
+  //   var response = await client.get(uri);
+  //   if(response.statusCode == 200){
+  //     var json = response.body;
+  //     return usersFromJson(json);
+  //   }
+  // }
 
 }
 

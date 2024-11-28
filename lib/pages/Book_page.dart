@@ -37,6 +37,9 @@ class _BookPageState extends State<BookPage> {
   List<Booking>? books = [];
   List<Messages>? msg = [];
   List<Users>? users = [];
+  Users cU = Urls.getUser();
+  
+
 
   List<Messages> mensajes = [];
   var isLoaded = false;
@@ -65,6 +68,13 @@ class _BookPageState extends State<BookPage> {
       });
     }
 
+
+    // cU = await Urls().getUser();
+    // if(cU != null){
+    //   setState(() {
+    //     isLoaded = true;
+    //   });
+    // }
     
   }
 
@@ -156,11 +166,14 @@ class _BookPageState extends State<BookPage> {
                 // print(mensajes[index].body);
                 //print(getMes(index));
                 // print(users);
+                print("USUARIO ACTUAL");
+                print(cU.username);
+                print(cU.id);
                 
                 Navigator.push(
                   context, 
                   MaterialPageRoute(
-                    builder: (context) => bookSelectedPage(b: books![index], m: msg, u: users),
+                    builder: (context) => bookSelectedPage(b: books![index], m: msg, u: users,),
                   ),
                 );
               },
