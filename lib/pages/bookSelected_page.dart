@@ -52,6 +52,22 @@ class bookSelectedPage extends StatelessWidget {
     }
   }
 
+  Future<void> deleteMsg(int m) async {
+
+    try{
+      Response response = await delete(
+        Uri.parse("https://pacou.pythonanywhere.com/messages/${m}")
+      );
+
+      if(response.statusCode == 204){
+        //print("Borrado");
+      }
+      
+    }catch(e){
+      print(e);
+    }
+  }
+
   
 
   @override
@@ -149,6 +165,14 @@ class bookSelectedPage extends StatelessWidget {
                   title: Text(M[index].body),
                   //subtitle: Text(M[index].user.toString())
                   subtitle: Text(" ${getUser(u, M[index].user)} "),
+                  trailing: currentUser.id == M[index].user 
+                  ? IconButton( 
+                      icon: const Icon(Icons.clear_sharp),
+                      onPressed: () async {
+                        deleteMsg(M[index].id);
+                        await Navigator.push(context, MaterialPageRoute(builder: (context) => const IntroPage()));
+                      },
+                    ) : const Text(" "),
                 );
               },
             ),
