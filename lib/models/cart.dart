@@ -26,4 +26,9 @@ class Cart extends ChangeNotifier {
     userCart.remove(equipment);
     notifyListeners();
   }
+
+  void clearCart(){
+    userCart.clear();
+    notifyListeners();
+  }
 }

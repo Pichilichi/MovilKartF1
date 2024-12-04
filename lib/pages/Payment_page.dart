@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
+import 'package:kartf1/models/cart.dart';
 import 'package:kartf1/pages/intro_page.dart';
+import 'package:provider/provider.dart';
 
 class PaymentPage extends StatefulWidget {
   const PaymentPage({super.key});
@@ -41,6 +43,7 @@ class _PaymentpageState extends State<PaymentPage> {
                   TextButton(
                     onPressed: () {
                       Navigator.push(context, MaterialPageRoute(builder: (context) => IntroPage()));
+                      removeCart();
                       showDialog(
                       context: context, 
                       builder: (context) => const AlertDialog(
@@ -61,9 +64,16 @@ class _PaymentpageState extends State<PaymentPage> {
     }
   }
 
+  void removeCart(){
+    Provider.of<Cart>(context, listen: false).clearCart();
+    // print("bORRADO");
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Consumer<Cart>(
+      builder: (context, value, child) => Scaffold(
+
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -97,6 +107,7 @@ class _PaymentpageState extends State<PaymentPage> {
           ),
         ],
       ),   
-    );
+    ),
+  );
   }
 }
