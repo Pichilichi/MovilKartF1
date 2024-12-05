@@ -1,5 +1,6 @@
 import 'package:kartf1/models/bookings.dart';
 import 'package:http/http.dart' as http;
+import 'package:kartf1/models/shoppingHistory.dart';
 // import 'dart:convert';
 import 'dart:async';
 
@@ -95,6 +96,17 @@ class Urls{
     if(response.statusCode == 200){
       var json = response.body;
       return usersFromJson(json);
+    }
+  }
+
+  Future<List<ShoppingHistory>?> getPurchases() async {
+    var client = http.Client();
+
+    var uri = Uri.parse('https://pacou.pythonanywhere.com/shoppingHistory/');
+    var response = await client.get(uri);
+    if(response.statusCode == 200){
+      var json = response.body;
+      return shoppingHistoryFromJson(json);
     }
   }
 

@@ -6,7 +6,9 @@ import 'package:kartf1/components/nav_bar.dart';
 import 'package:kartf1/models/cart.dart';
 import 'package:kartf1/models/equipments.dart';
 import 'package:kartf1/models/photo.dart';
+import 'package:kartf1/models/shoppingHistory.dart';
 import 'package:kartf1/pages/Cart_page.dart';
+import 'package:kartf1/pages/intro_page.dart';
 import 'package:provider/provider.dart';
 
 import '../django/urls.dart';
@@ -70,6 +72,14 @@ class _EquipPageState extends State<EquipPage>{
         backgroundColor: Colors.white,
         appBar: AppBar(
         title: Text("Shop"),
+        actions: [
+          IconButton(
+          icon: Icon(Icons.manage_history_outlined), 
+          onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context) => userPurchase()));
+          },
+         ),
+        ],
         // actions: [
         //   IconButton(
         //   icon: Icon(Icons.arrow_back), 
@@ -291,6 +301,70 @@ class EqCat extends StatelessWidget {
               selected == true ? Theme.of(context).colorScheme.primary : null,
           fontWeight: selected == true ? FontWeight.bold : null,
         ),
+      ),
+    );
+  }
+}
+
+class userPurchase extends StatefulWidget {
+  const userPurchase({super.key});
+
+  @override
+  State<userPurchase> createState() => _userPurchasesState();
+}
+
+class _userPurchasesState extends State<userPurchase> {
+
+  List<ShoppingHistory>? sH = [];
+  var isLoaded = false;
+
+getData() async {
+    sH = (await Urls().getPurchases());
+    if(sH != null){
+      setState(() {
+        isLoaded = true;
+      });
+    }
+}
+
+@override
+  void initState(){
+    // _retrieveEvents();
+    super.initState();
+
+    getData();
+  }
+  
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Text("Purchase history"),
+        titleTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: Colors.black),
+        
+      ),
+
+      backgroundColor: Colors.white,
+      body: sH!.isNotEmpty 
+      ? Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: sH!.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(sH![index].products),
+                  
+                  //subtitle: Text(M[index].user.toString())
+                  // subtitle: Text(" ${getUser(u, M[index].user)} "),
+                  //trailing: currentUser.id == M[index].user 
+                );
+              },
+            ),
+          ),
+        ],
+      ) : const Center(child: Text("Nothing here, man")
       ),
     );
   }
