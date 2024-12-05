@@ -31,4 +31,21 @@ class Cart extends ChangeNotifier {
     userCart.clear();
     notifyListeners();
   }
+
+  (String, double) addPurchase() {
+    String products = "";
+    double finalPrice = 0;
+    for(int i = 0; i < userCart.length; i++){
+      // print(userCart[i].name + " " + userCart[i].price.toString());
+      products = "$products${userCart[i].name} ${userCart[i].price} ";
+      finalPrice = finalPrice + userCart[i].price;
+      //"$finalPrice${userCart[i].price}" as double;
+    }
+    print(products);
+    print(finalPrice);
+
+    return (products, finalPrice);
+    
+  }
+  
 }

@@ -8,12 +8,16 @@ class ShoppingHistory {
     int id;
     int user;
     String products;
+    double indvPrice;
+    double totalPrice;
     DateTime created;
 
     ShoppingHistory({
         required this.id,
         required this.user,
         required this.products,
+        required this.indvPrice,
+        required this.totalPrice,
         required this.created,
     });
 
@@ -21,7 +25,9 @@ class ShoppingHistory {
         id: json["id"],
         user: json["user"],
         products: json["products"],
-        created: json["created"],
+        indvPrice: json["indvPrice"],
+        totalPrice: json["totalPrice"],
+        created: DateTime.parse(json["created"]),
 
     );
 
@@ -29,6 +35,8 @@ class ShoppingHistory {
         "id": id,
         "username": user,
         "products": products,
+        "indvPrice": indvPrice,
+        "totalPrice": totalPrice,
         "created": created,
     };
 }

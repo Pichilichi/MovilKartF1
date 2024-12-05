@@ -1,6 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
+import 'package:http/http.dart';
+import 'package:kartf1/django/urls.dart';
 import 'package:kartf1/models/cart.dart';
+import 'package:kartf1/models/equipments.dart';
+import 'package:kartf1/models/users.dart';
 import 'package:kartf1/pages/intro_page.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +23,9 @@ class _PaymentpageState extends State<PaymentPage> {
   String cardHolderName = '';
   String cvvCode = '';
   String expiryDate = '';
+  Users cU = Urls.getUser();
+  late (String, double) purchase;
+  
 
   void PayTapped(){
     if (formKey.currentState!.validate()){
@@ -41,9 +50,12 @@ class _PaymentpageState extends State<PaymentPage> {
                   ),
 
                   TextButton(
-                    onPressed: () {
+                    onPressed: () {(
+                      purchase = Provider.of<Cart>(context, listen: false).addPurchase());
+                      print(purchase);
+                      addSH(purchase.$1,purchase.$2,cU.id);
                       Navigator.push(context, MaterialPageRoute(builder: (context) => IntroPage()));
-                      removeCart();
+                      Provider.of<Cart>(context, listen: false).clearCart();
                       showDialog(
                       context: context, 
                       builder: (context) => const AlertDialog(
@@ -64,10 +76,51 @@ class _PaymentpageState extends State<PaymentPage> {
     }
   }
 
-  void removeCart(){
-    Provider.of<Cart>(context, listen: false).clearCart();
-    // print("bORRADO");
+  void addSH(String products, double finalPrice, currentUserId) async{
+
+    try{
+
+      Response response = await post(
+        Uri.parse('https://pacou.pythonanywhere.com/shoppingHistory/'),
+        body: {
+          'products': products,
+          'user': currentUserId.toString(),
+          'totalPrice': finalPrice.toString(),
+          'indvPrice': '0',
+        }
+      );
+
+      if(response.statusCode == 201){
+        var data = jsonDecode(response.body.toString());
+        print('data added');
+        print(data);
+        
+        // IntroPage(), prueba a ver si sale la barra de abajo asi
+      }else{
+        print('failed');
+        showDialog(
+          context: context, 
+          builder: (context) => AlertDialog(
+            title: Text('Something went wrong...'),
+            content: Text('Check the data'),
+          ),
+        );
+      }
+    }catch(e){
+      print(e.toString());
+    }
   }
+
+  // createPurchase(){
+  //   List<Equipments> eq_Cart = Cart.getCart();
+  //   print(eq_Cart);
+
+  //   // for(int i = 0; i < c.length; i++){
+  //   //   print(c[i].toString());
+  //   // }
+  // }
+
+ 
 
   @override
   Widget build(BuildContext context) {

@@ -7,6 +7,7 @@ import 'package:kartf1/models/cart.dart';
 import 'package:kartf1/models/equipments.dart';
 import 'package:kartf1/models/photo.dart';
 import 'package:kartf1/models/shoppingHistory.dart';
+import 'package:kartf1/models/users.dart';
 import 'package:kartf1/pages/Cart_page.dart';
 import 'package:kartf1/pages/intro_page.dart';
 import 'package:provider/provider.dart';
@@ -316,6 +317,7 @@ class userPurchase extends StatefulWidget {
 class _userPurchasesState extends State<userPurchase> {
 
   List<ShoppingHistory>? sH = [];
+  Users cU = Urls.getUser();
   var isLoaded = false;
 
 getData() async {
@@ -334,9 +336,22 @@ getData() async {
 
     getData();
   }
+
+  allPurchases(){
+    List<ShoppingHistory> SH = [];
+    for(int i = 0; i < sH!.length; i++){
+      if(sH![i].user == cU.id){
+        SH.add(sH![i]);
+      }
+    }
+    return SH;
+  }
+
+  //currentUser.id == b.user 
   
   @override
   Widget build(BuildContext context) {
+    List<ShoppingHistory> SH = allPurchases();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -346,15 +361,17 @@ getData() async {
       ),
 
       backgroundColor: Colors.white,
-      body: sH!.isNotEmpty 
+      body: SH.isNotEmpty 
       ? Column(
         children: [
           Expanded(
             child: ListView.builder(
-              itemCount: sH!.length,
+              itemCount: SH.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(sH![index].products),
+                  title: Text(SH[index].products),
+                  subtitle: Text(SH[index].created.toString()),
+                  trailing: Text(SH[index].totalPrice.toString()),
                   
                   //subtitle: Text(M[index].user.toString())
                   // subtitle: Text(" ${getUser(u, M[index].user)} "),
