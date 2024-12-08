@@ -371,7 +371,7 @@ getData() async {
                 return ListTile(
                   title: Text(SH[index].products),
                   subtitle: Text(SH[index].created.toString()),
-                  trailing: Text(SH[index].totalPrice.toString()),
+                  trailing: Text(SH[index].totalPrice.toString() + "\u{20AC}"),
                   
                   //subtitle: Text(M[index].user.toString())
                   // subtitle: Text(" ${getUser(u, M[index].user)} "),

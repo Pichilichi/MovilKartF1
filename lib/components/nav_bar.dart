@@ -29,6 +29,9 @@ class MyNavBar extends StatelessWidget {
             icon: Icons.home_outlined 
           ),
           GButton(
+            icon: Icons.home_repair_service_outlined
+          ),
+          GButton(
             icon: Icons.article_outlined,
 //            text: 'Circuits',
           ),

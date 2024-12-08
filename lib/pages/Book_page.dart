@@ -34,6 +34,15 @@ class AddBookPage extends StatefulWidget {
 
 }
 
+class OthersBookPage extends StatefulWidget {
+  const OthersBookPage({super.key});
+
+  @override
+  State<OthersBookPage> createState() => _OthersBookPageState();
+}
+
+
+
 class _BookPageState extends State<BookPage> {
   Client client = http.Client();
   List<Booking>? books = [];
@@ -131,6 +140,10 @@ class _BookPageState extends State<BookPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    final _filteredBooks = books
+    ?.where((e) => e.user == cU.id).toList();
+
     return Scaffold(
       appBar: AppBar(
         title: Text(" Booking "),
@@ -162,14 +175,14 @@ class _BookPageState extends State<BookPage> {
 
         
         child: ListView.builder(
-          itemCount: books?.length,
+          itemCount: _filteredBooks?.length,
           
 
           
           itemBuilder: (context, index) {
             return ListTile(
-              title: Text(books![index].name),
-              subtitle: Text(" ${getUser(users, books![index].user)} "),
+              title: Text(_filteredBooks![index].name),
+              subtitle: Text(" ${getUser(users, _filteredBooks[index].user)} "),
               onTap: () {
                 //getMes(index);
                 // print("Aquiii");
@@ -183,7 +196,7 @@ class _BookPageState extends State<BookPage> {
                 Navigator.push(
                   context, 
                   MaterialPageRoute(
-                    builder: (context) => bookSelectedPage(b: books![index], m: msg, u: users, currentUser:cU),
+                    builder: (context) => bookSelectedPage(b: _filteredBooks[index], m: msg, u: users, currentUser:cU),
                   ),
                 );
               },
@@ -528,3 +541,130 @@ class _AddBookPageState extends State<AddBookPage>{
   }
 }
 
+
+class _OthersBookPageState extends State<OthersBookPage> {
+ Client client = http.Client();
+  List<Booking>? books = [];
+  List<Messages>? msg = [];
+  List<Users>? users = [];
+  Users cU = Urls.getUser();
+  
+
+
+  List<Messages> mensajes = [];
+  var isLoaded = false;
+
+  @override
+  void initState(){
+    // _retrieveEvents();
+    super.initState();
+
+    getData();
+    getMsg();
+  }
+
+  getData() async {
+    books = await Urls().getBookings();
+    if(books != null){
+      setState(() {
+        isLoaded = true;
+      });
+    }
+
+    users = await Urls().getUsers();
+    if(users != null){
+      setState(() {
+        isLoaded = true;
+      });
+    }
+
+    
+  }
+
+  getMsg() async {
+    msg = await Urls().getMessages();
+    if(msg != null){
+      setState(() {
+        isLoaded = true;
+      });
+    }
+  
+  }
+
+  getUser(List <Users>? user, int id){
+    for(int i = 0; i < user!.length; i++){
+      if(id == user[i].id){
+        return user[i].username;
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    final _filteredBooks = books
+    ?.where((e) => e.racers.contains(cU.id)).toList();
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(" Booking "),
+        actions: [
+          IconButton(
+          icon: Icon(Icons.add), 
+          onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context) => AddBookPage()));
+          },
+         ),
+        ],
+        
+        titleTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: Colors.black),
+        backgroundColor: Colors.white,
+        automaticallyImplyLeading: false, // cambia lo del boton hacia atras (testear)
+        scrolledUnderElevation: 0.0, // la barra superior deberia ser 100% transparente ahora
+        elevation: 0,
+      ),
+      
+      backgroundColor: Colors.white,
+      body: Visibility(
+        visible: isLoaded,
+
+        replacement: const Center(
+          child: CircularProgressIndicator(),
+        ),
+
+        
+
+        
+        child: ListView.builder(
+          itemCount: _filteredBooks?.length,
+          
+
+          
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text(_filteredBooks![index].name),
+              subtitle: Text(" ${getUser(users, _filteredBooks[index].user)} "),
+              onTap: () {
+                
+                
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(
+                    builder: (context) => bookSelectedPage(b: _filteredBooks[index], m: msg, u: users, currentUser:cU),
+                  ),
+                );
+              },
+            );
+            
+            
+          },
+          
+        ),
+
+      
+       
+      ),
+      
+    );
+  }
+}

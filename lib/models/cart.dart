@@ -37,7 +37,7 @@ class Cart extends ChangeNotifier {
     double finalPrice = 0;
     for(int i = 0; i < userCart.length; i++){
       // print(userCart[i].name + " " + userCart[i].price.toString());
-      products = "$products${userCart[i].name} ${userCart[i].price} ";
+      products = "$products${userCart[i].name} ---- ${userCart[i].price}E \n";
       finalPrice = finalPrice + userCart[i].price;
       //"$finalPrice${userCart[i].price}" as double;
     }
