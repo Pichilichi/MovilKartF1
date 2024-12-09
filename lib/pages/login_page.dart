@@ -90,10 +90,11 @@ login(String user, password) async{
     return Scaffold(
         appBar: AppBar(
         title: Text("Welcome back!"),
-        
         titleTextStyle: TextStyle(fontWeight: FontWeight.bold, 
         fontSize: 36, 
         color: Colors.black,),
+        toolbarHeight: 40,
+        
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false, 
         scrolledUnderElevation: 0.0, // la barra superior deberia ser 100% transparente ahora
@@ -104,14 +105,17 @@ login(String user, password) async{
 
       backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(4),
+
+        
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+
+
             Image.asset('assets/images/transparente.png'),
 
-            const SizedBox(height: 20),
 
             TextField(
               controller: userController,
@@ -137,14 +141,19 @@ login(String user, password) async{
               ),
             ),
             const SizedBox(height: 20,),
-            GestureDetector(
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                GestureDetector(
               onTap: () {
                 login(userController.text.toString(), pwdController.text.toString());
                 // Navigator.push(context, MaterialPageRoute(builder: (context) => IntroPage())); 
               },
               child: Container(
-                height: 60,
-                width: 300,
+                height: 40,
+                width: 150,
                 decoration: BoxDecoration(
                   color: Colors.black,
                   borderRadius: BorderRadius.circular(30),
@@ -161,7 +170,7 @@ login(String user, password) async{
               ),
             ),
 
-            const SizedBox(height: 20,),
+          const SizedBox(width: 20,),
 
             GestureDetector(
               onTap: (){
@@ -170,8 +179,8 @@ login(String user, password) async{
                 MaterialPageRoute(builder: (context) => const RegisterPage()));
               },
               child: Container(
-                height: 60,
-                width: 300,
+                height: 40,
+                width: 150,
                 decoration: BoxDecoration(
                   color: Colors.black,
                   borderRadius: BorderRadius.circular(30),
@@ -186,7 +195,13 @@ login(String user, password) async{
                   ),
                 ),
               ),
-            )
+            ),
+
+              ],
+            ),
+            
+            
+
           ],
         ),
       ),
@@ -337,8 +352,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 // Navigator.push(context, MaterialPageRoute(builder: (context) => IntroPage())); 
               },
               child: Container(
-                height: 60,
-                width: 300,
+                height: 40,
+                width: 200,
                 decoration: BoxDecoration(
                   color: Colors.black,
                   borderRadius: BorderRadius.circular(30),
