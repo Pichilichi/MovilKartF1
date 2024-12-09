@@ -66,13 +66,32 @@ class bookSelectedPage extends StatelessWidget {
 
     try{
       Response response = await delete(
-        Uri.parse("https://pacou.pythonanywhere.com/messages/${m}")
+        Uri.parse("https://pacou.pythonanywhere.com/messages/${m}"),
+
       );
 
       if(response.statusCode == 204){
         //print("Borrado");
       }
       
+    }catch(e){
+      print(e);
+    }
+  }
+
+  Future<void> addRacer(var id) async {
+    try{
+      Response response = await put(
+        Uri.parse("https://pacou.pythonanywhere.com/bookings/${b.id}"),
+        body: {
+          'racers' : id
+        }
+      );
+
+      if(response.statusCode == 200){
+        
+      }
+
     }catch(e){
       print(e);
     }
@@ -200,8 +219,20 @@ final dropdownvalue;
               );
             }).toList(),
              onChanged: (newVal) {
-              // DEVUELVE ID USUARIO, QUEDA HACER METODO AÑADIR RACER
-                print(newVal);
+              showDialog(
+                  context: context, 
+                  builder: (context) => AlertDialog(
+                    title: Text('Racer added!'),
+                    content: Text('Access to the booking has been granted'),
+                    actions: [
+                      TextButton(
+                        onPressed: Navigator.of(context).pop, 
+                        child: Text("Hooray!"))
+                    ],
+                  ),
+                  
+              );
+                addRacer(newVal);
               },
               value: dropdownvalue,
             ) : Text(" "),
