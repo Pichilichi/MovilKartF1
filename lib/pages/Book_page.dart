@@ -610,14 +610,6 @@ class _OthersBookPageState extends State<OthersBookPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(" Others Bookings "),
-        actions: [
-          IconButton(
-          icon: Icon(Icons.add), 
-          onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => AddBookPage()));
-          },
-         ),
-        ],
         
         titleTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: Colors.black),
         backgroundColor: Colors.white,

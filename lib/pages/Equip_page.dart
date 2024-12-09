@@ -370,12 +370,8 @@ getData() async {
               itemBuilder: (context, index) {
                 return ListTile(
                   title: Text(SH[index].products),
-                  subtitle: Text(SH[index].created.toString()),
-                  trailing: Text(SH[index].totalPrice.toString() + "\u{20AC}"),
-                  
-                  //subtitle: Text(M[index].user.toString())
-                  // subtitle: Text(" ${getUser(u, M[index].user)} "),
-                  //trailing: currentUser.id == M[index].user 
+                  subtitle: Text("${SH[index].created.day}/${SH[index].created.month}/${SH[index].created.year} - ${SH[index].created.hour}:${SH[index].created.minute}"),
+                  trailing: Text("${SH[index].totalPrice.toStringAsFixed(2)}\u{20AC}"), 
                 );
               },
             ),

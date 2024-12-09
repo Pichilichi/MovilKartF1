@@ -88,6 +88,20 @@ login(String user, password) async{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+        title: Text("Welcome back!"),
+        
+        titleTextStyle: TextStyle(fontWeight: FontWeight.bold, 
+        fontSize: 36, 
+        color: Colors.black,),
+        backgroundColor: Colors.white,
+        automaticallyImplyLeading: false, 
+        scrolledUnderElevation: 0.0, // la barra superior deberia ser 100% transparente ahora
+        elevation: 0,
+        centerTitle: true,
+        
+      ),
+
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(8),
@@ -95,12 +109,9 @@ login(String user, password) async{
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(
-              Icons.lock,
-              size: 100,
-            ),
+            Image.asset('assets/images/transparente.png'),
 
-            const SizedBox(height: 50),
+            const SizedBox(height: 20),
 
             TextField(
               controller: userController,
@@ -149,15 +160,33 @@ login(String user, password) async{
                 ),
               ),
             ),
-            ElevatedButton(
-              child: const Text('Registro'),
-              onPressed: () {
+
+            const SizedBox(height: 20,),
+
+            GestureDetector(
+              onTap: (){
                 Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const RegisterPage()),
-              );
-}
-            ),
+                MaterialPageRoute(builder: (context) => const RegisterPage()));
+              },
+              child: Container(
+                height: 60,
+                width: 300,
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: const Center(
+                  child: Text(
+                    'New user', 
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),
@@ -228,6 +257,19 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Nice to meet you!"),
+        
+        titleTextStyle: TextStyle(fontWeight: FontWeight.bold, 
+        fontSize: 36, 
+        color: Colors.black,),
+        backgroundColor: Colors.white,
+        automaticallyImplyLeading: false, 
+        scrolledUnderElevation: 0.0, // la barra superior deberia ser 100% transparente ahora
+        elevation: 0,
+        centerTitle: true,
+        
+      ),
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(8),
@@ -235,10 +277,7 @@ class _RegisterPageState extends State<RegisterPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(
-              Icons.lightbulb_rounded,
-              size: 100,
-            ),
+            Text("Let's register you first! "),
 
             const SizedBox(height: 50),
 
@@ -306,7 +345,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 child: const Center(
                   child: Text(
-                    'Sign Up', 
+                    'Create account', 
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,

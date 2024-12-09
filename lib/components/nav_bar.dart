@@ -29,7 +29,7 @@ class MyNavBar extends StatelessWidget {
             icon: Icons.home_outlined 
           ),
           GButton(
-            icon: Icons.home_repair_service_outlined
+            icon: Icons.other_houses_outlined
           ),
           GButton(
             icon: Icons.article_outlined,
