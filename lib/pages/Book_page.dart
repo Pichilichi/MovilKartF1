@@ -43,6 +43,7 @@ class OthersBookPage extends StatefulWidget {
 
 
 
+
 class _BookPageState extends State<BookPage> {
   Client client = http.Client();
   List<Booking>? books = [];
@@ -146,7 +147,7 @@ class _BookPageState extends State<BookPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(" Booking "),
+        title: Text(" My Bookings "),
         actions: [
           IconButton(
           icon: Icon(Icons.add), 
@@ -174,8 +175,9 @@ class _BookPageState extends State<BookPage> {
         
 
         
-        child: ListView.builder(
-          itemCount: _filteredBooks?.length,
+        child: _filteredBooks!.isNotEmpty 
+        ? ListView.builder(
+          itemCount: _filteredBooks.length,
           
 
           
@@ -258,7 +260,7 @@ class _BookPageState extends State<BookPage> {
             
           },
           
-        ),
+        ) : const Center( child : (Text("You should create a booking!"))),
 
         // child: ElevatedButton(onPressed: () {  }, child: null,),
        
@@ -607,7 +609,7 @@ class _OthersBookPageState extends State<OthersBookPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(" Booking "),
+        title: Text(" Others Bookings "),
         actions: [
           IconButton(
           icon: Icon(Icons.add), 
@@ -635,8 +637,9 @@ class _OthersBookPageState extends State<OthersBookPage> {
         
 
         
-        child: ListView.builder(
-          itemCount: _filteredBooks?.length,
+        child: _filteredBooks!.isNotEmpty 
+        ? ListView.builder(
+          itemCount: _filteredBooks.length,
           
 
           
@@ -659,7 +662,7 @@ class _OthersBookPageState extends State<OthersBookPage> {
             
           },
           
-        ),
+        ) : const Center( child : (Text("No invitations... for now :)"))),
 
       
        

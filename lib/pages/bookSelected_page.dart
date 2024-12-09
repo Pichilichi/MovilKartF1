@@ -10,7 +10,7 @@ import 'package:kartf1/pages/intro_page.dart';
 
 class bookSelectedPage extends StatelessWidget {
   const bookSelectedPage({super.key, required this.b, required this.m, 
-  required this.u, required this.currentUser});
+  required this.u, required this.currentUser, this.dropdownvalue,});
 
   final Booking b;
   final m;
@@ -35,6 +35,16 @@ class bookSelectedPage extends StatelessWidget {
         return user[i].username;
       }
     }
+  }
+
+  getUsers(){
+    List us = [];
+    for(int i = 0; i < u!.length; i++){
+      if(b.racers.contains(u![i].id) == false){
+        us.add(u![i]);
+      }
+    }
+    return us;
   }
 
   Future<void> deleteBooking() async {
@@ -68,11 +78,13 @@ class bookSelectedPage extends StatelessWidget {
     }
   }
 
+final dropdownvalue;
   
 
   @override
   Widget build(BuildContext context) {
     List<Messages> M = allMesagges();
+    List us = getUsers();
     // Use the Todo to create the UI.
     return Scaffold(
       appBar: AppBar(
@@ -154,11 +166,11 @@ class bookSelectedPage extends StatelessWidget {
       ),
       
       backgroundColor: Colors.white,
-      body:  M.isNotEmpty 
-      ? Column(
+      body: Column(
         children: [
           Expanded(
-            child: ListView.builder(
+            child:  M.isNotEmpty ?
+             ListView.builder(
               itemCount: M.length,
               itemBuilder: (context, index) {
                 return ListTile(
@@ -175,11 +187,31 @@ class bookSelectedPage extends StatelessWidget {
                     ) : const Text(" "),
                 );
               },
-            ),
+            ) : const Center(child: Text("Nothing here, man")),
           ),
+          currentUser.id == b.user 
+          ? DropdownButton(
+              hint: Text("Add a racer!"),
+              icon: const Icon(Icons.keyboard_arrow_down),
+              items: us.map((item) {
+              return DropdownMenuItem(
+                value: item.id.toString(),
+                child: Text(item.username.toString()),
+              );
+            }).toList(),
+             onChanged: (newVal) {
+              // DEVUELVE ID USUARIO, QUEDA HACER METODO AÑADIR RACER
+                print(newVal);
+              },
+              value: dropdownvalue,
+            ) : Text(" "),
         ],
-      ) : const Center(child: Text("Nothing here, man")
-      ),
+      ) 
+      
+      
+      
+
+      
       
     );
   }
