@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kartf1/models/cart.dart';
 import 'package:kartf1/pages/login_page.dart';
 import 'package:provider/provider.dart';
-import 'pages/intro_page.dart';
+
 
 void main() {
   runApp(const MyApp());

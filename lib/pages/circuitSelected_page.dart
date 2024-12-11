@@ -3,38 +3,37 @@ import 'package:flutter_svg/svg.dart';
 import 'package:kartf1/models/circuits.dart';
 import 'package:map_launcher/map_launcher.dart';
 
-class circuitSelectedPage extends StatelessWidget {
-  // map
+// SELECTED CIRCUIT CLASS
+class CircuitSelectedPage extends StatelessWidget {
+  
+  // Allows the user to open a map application based on the circuit
   openMapsSheet(context, lat, lon, name) async {
     try {
       final coords = Coords(lat, lon);
-      final title = "${name}";
+      final title = "$name";
       final availableMaps = await MapLauncher.installedMaps;
         
-
       showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
           return SafeArea(
             child: SingleChildScrollView(
-              child: Container(
-                child: Wrap(
-                  children: <Widget>[
-                    for (var map in availableMaps)
-                      ListTile(
-                        onTap: () => map.showMarker(
-                          coords: coords,
-                          title: title,
-                        ),
-                        title: Text(map.mapName),
-                        leading: SvgPicture.asset(
-                          map.icon,
-                          height: 30.0,
-                          width: 30.0,
-                        ),
+              child: Wrap(
+                children: <Widget>[
+                  for (var map in availableMaps)
+                    ListTile(
+                      onTap: () => map.showMarker(
+                        coords: coords,
+                        title: title,
                       ),
-                  ],
-                ),
+                      title: Text(map.mapName),
+                      leading: SvgPicture.asset(
+                        map.icon,
+                        height: 30.0,
+                        width: 30.0,
+                      ),
+                    ),
+                ],
               ),
             ),
           );
@@ -45,23 +44,27 @@ class circuitSelectedPage extends StatelessWidget {
     }
   }
 
+  // CIRCUIT PAGE
+  const CircuitSelectedPage({super.key, required this.c});
 
-  // In the constructor, require a Todo.
-  const circuitSelectedPage({super.key, required this.c});
-
-  // Declare a field that holds the Todo.
   final Circuits c;
 
+  // Circuit build
   @override
   Widget build(BuildContext context) {
-    // Use the Todo to create the UI.
     return Scaffold(
+
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(c.name),
-        titleTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: Colors.black),
+        titleTextStyle: const TextStyle(
+          fontWeight: FontWeight.bold, 
+          fontSize: 24, 
+          color: Colors.black),
       ),
+
       backgroundColor: Colors.white,
+
       body: Column(
         children: [
           Image.network("https://pacou.pythonanywhere.com${c.img}"),
@@ -72,8 +75,8 @@ class circuitSelectedPage extends StatelessWidget {
 
           MaterialButton(
               onPressed: () => openMapsSheet(context, c.latitude, c.longitude, c.name),
-              child: Text('Show Maps'),
-            ),
+              child: const Text('Show Maps'),
+          ),
         ],  
       ),
     );

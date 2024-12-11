@@ -1,23 +1,21 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:kartf1/models/bookings.dart';
 import 'package:kartf1/models/messages.dart';
 import 'package:kartf1/models/users.dart';
-import 'package:kartf1/pages/Book_page.dart';
 import 'package:kartf1/pages/intro_page.dart';
 
-class bookSelectedPage extends StatelessWidget {
-  const bookSelectedPage({super.key, required this.b, required this.m, 
+// SELECTED BOOKING CLASS
+class BookSelectedPage extends StatelessWidget {
+  const BookSelectedPage({super.key, required this.b, required this.m, 
   required this.u, required this.currentUser, this.dropdownvalue,});
 
   final Booking b;
   final m;
   final List <Users>? u;
   final Users currentUser;
-  // final List <Users>? currentUser;
 
+  // Returns all the messages for the specified booking
   allMesagges(){
     List<Messages> M = [];
     for(int i = 0; i < m.length; i++){
@@ -28,7 +26,7 @@ class bookSelectedPage extends StatelessWidget {
     return M;
   }
 
-
+  // Returns the user who created the message
   getUser(List <Users>? user, int id){
     for(int i = 0; i < user!.length; i++){
       if(id == user[i].id){
@@ -37,16 +35,18 @@ class bookSelectedPage extends StatelessWidget {
     }
   }
 
+  // Gets the users who are not part of a booking (Not a racer) and excludes himself
   getUsers(){
     List us = [];
     for(int i = 0; i < u!.length; i++){
-      if(b.racers.contains(u![i].id) == false){
+      if(b.racers.contains(u![i].id) == false && currentUser.id != u![i].id){
         us.add(u![i]);
       }
     }
     return us;
   }
 
+  // Deletes the booking
   Future<void> deleteBooking() async {
     try{
       Response response = await delete(
@@ -54,7 +54,7 @@ class bookSelectedPage extends StatelessWidget {
       );
 
       if(response.statusCode == 204){
-        //print("Borrado");
+        
       }
       
     }catch(e){
@@ -62,6 +62,7 @@ class bookSelectedPage extends StatelessWidget {
     }
   }
 
+  // Deletes a message
   Future<void> deleteMsg(int m) async {
 
     try{
@@ -79,11 +80,33 @@ class bookSelectedPage extends StatelessWidget {
     }
   }
 
+  // Adds a user to the booking
   Future<void> addRacer(var id) async {
     try{
       Response response = await put(
         Uri.parse("https://pacou.pythonanywhere.com/bookings/${b.id}"),
         body: {
+          'opt' : 'add',
+          'racers' : id
+        }
+      );
+
+      if(response.statusCode == 200){
+        
+      }
+
+    }catch(e){
+      print(e);
+    }
+  }
+  
+  Future<void> eraseRacer(var id) async {
+    print(id);
+    try{
+      Response response = await put(
+        Uri.parse("https://pacou.pythonanywhere.com/bookings/${b.id}"),
+        body: {
+          'opt' : 'out',
           'racers' : id
         }
       );
@@ -97,20 +120,27 @@ class bookSelectedPage extends StatelessWidget {
     }
   }
 
-final dropdownvalue;
-  
 
+  final dropdownvalue;
+  
+  // Selected booking build
   @override
   Widget build(BuildContext context) {
+
     List<Messages> M = allMesagges();
     List us = getUsers();
-    // Use the Todo to create the UI.
+    
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(b.name + " " + b.raceDay.day.toString() + "/" + b.raceDay.month.toString()),
-        titleTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: Colors.black),
+        title: Text("${b.name} ${b.raceDay.day}/${b.raceDay.month}"),
+        titleTextStyle: const TextStyle(
+          fontWeight: FontWeight.bold, 
+          fontSize: 24, 
+          color: Colors.black
+        ),
         actions: [
+          // Checks if the user who pressed the delete button is the creator of the booking
           IconButton( onPressed: currentUser.id == b.user 
           ? () {
             showDialog(
@@ -127,20 +157,21 @@ final dropdownvalue;
                   TextButton(
                     onPressed: () async {
                       deleteBooking();
-                      final sb = SnackBar(content: 
-                      Text("Booking deleted!"),
-                      duration: const Duration(milliseconds: 2000),);
+                      const sb = SnackBar(
+                        content: Text("Booking deleted!"),
+                        duration: Duration(milliseconds: 2000),
+                      );
                       ScaffoldMessenger.of(context).showSnackBar(sb);
                       await Navigator.push(context, MaterialPageRoute(builder: (context) => const IntroPage()));
-                      
-                      // el borrarlo de la api
                     },
-                    child: Text("Delete")
-                  ), //id del booking para borrarlo
+                    child: const Text("Delete")
+                  ), 
+
                 ],
               )
             );
           } : () {
+
             showDialog(
               context: context,
               builder: (context) => AlertDialog(
@@ -155,28 +186,11 @@ final dropdownvalue;
               )
             );
           },
-
-          
-          
-          // } currentUser?[0].id == b.user : () {
-          //   showDialog(
-          //     context: context,
-          //     builder: (context) => AlertDialog(
-          //       title: const Text ("You cant delete this"),
-          //       actions: [
-
-          //         TextButton(
-          //           onPressed: () => Navigator.pop(context), 
-          //           child: const Text("Cancel")
-          //         ),
-          //       ],
-          //     )
-          //   );
-          // },    
+  
           icon: const Icon (Icons.delete)),
 
           IconButton(
-          icon: Icon(Icons.add), 
+          icon: const Icon(Icons.add), 
           onPressed: (){
             Navigator.push(context, MaterialPageRoute(builder: (context) => AddMsgPage(b : b, currentUser: currentUser,)));
           },
@@ -188,66 +202,67 @@ final dropdownvalue;
       body: Column(
         children: [
           Expanded(
-            child:  M.isNotEmpty ?
-             ListView.builder(
-              itemCount: M.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(M[index].body),
-                  //subtitle: Text(M[index].user.toString())
-                  subtitle: Text(" ${getUser(u, M[index].user)} "),
-                  trailing: currentUser.id == M[index].user 
-                  ? IconButton( 
-                      icon: const Icon(Icons.clear_sharp),
-                      onPressed: () async {
-                        deleteMsg(M[index].id);
-                        await Navigator.push(context, MaterialPageRoute(builder: (context) => const IntroPage()));
-                      },
-                    ) : const Text(" "),
-                );
-              },
+            child:  M.isNotEmpty 
+            ? ListView.builder(
+                itemCount: M.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(M[index].body),
+                    subtitle: Text(" ${getUser(u, M[index].user)} "),
+                    trailing: currentUser.id == M[index].user 
+                    ? IconButton( 
+                        icon: const Icon(Icons.clear_sharp),
+                        onPressed: () async {
+                          deleteMsg(M[index].id);
+                          await Navigator.push(context, MaterialPageRoute(builder: (context) => const IntroPage()));
+                        },
+                      ) : const Text(" "),
+                  );
+                },
             ) : const Center(child: Text("Nothing here, man")),
           ),
           currentUser.id == b.user 
           ? DropdownButton(
-              hint: Text("Add a racer!"),
+              hint: const Text("Add a racer!"),
               icon: const Icon(Icons.keyboard_arrow_down),
               items: us.map((item) {
-              return DropdownMenuItem(
-                value: item.id.toString(),
-                child: Text(item.username.toString()),
-              );
-            }).toList(),
-             onChanged: (newVal) {
-              showDialog(
-                  context: context, 
-                  builder: (context) => AlertDialog(
-                    title: Text('Racer added!'),
-                    content: Text('Access to the booking has been granted'),
-                    actions: [
-                      TextButton(
-                        onPressed: Navigator.of(context).pop, 
-                        child: Text("Hooray!"))
-                    ],
-                  ),
-                  
-              );
-                addRacer(newVal);
-              },
-              value: dropdownvalue,
-            ) : Text(" "),
-        ],
-      ) 
-      
-      
-      
+                return DropdownMenuItem(
+                  value: item.id.toString(),
+                  child: Text(item.username.toString()),
+                );
+              }
+            ).toList(),
 
-      
-      
+            onChanged: (newVal) {
+              showDialog(
+                context: context, 
+                builder: (context) => AlertDialog(
+                  title: const Text('Racer added!'),
+                  content: const Text('Access to the booking has been granted'),
+                  actions: [
+                    TextButton(
+                      onPressed: Navigator.of(context).pop, 
+                      child: const Text("Hooray!")
+                    )
+                  ],
+                ),  
+              );
+              addRacer(newVal);
+            },
+              value: dropdownvalue,
+          ) : IconButton(
+            onPressed: (){
+              eraseRacer(currentUser.id.toString());
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const IntroPage()));
+            }, 
+            icon: const Icon(Icons.door_back_door_outlined))
+        ],
+      ),
     );
   }
 }
 
+// ADD MESSAGE CLASS
 class AddMsgPage extends StatefulWidget {
   const AddMsgPage({super.key, required this.b, required this.currentUser});
 
@@ -259,14 +274,14 @@ class AddMsgPage extends StatefulWidget {
 
 }
 
+// ADD MESSAGE PAGE
 class _AddMsgPageState extends State<AddMsgPage>{
 
 
+// Post a message on te selected booking
 void addMsg(String bodyMsg, bookingId, currentUserId) async{
 
     try{
-
-      print("dentro del response");
       Response response = await post(
         Uri.parse('https://pacou.pythonanywhere.com/messages/'),
         body: {
@@ -277,18 +292,12 @@ void addMsg(String bodyMsg, bookingId, currentUserId) async{
       );
 
       if(response.statusCode == 201){
-        var data = jsonDecode(response.body.toString());
-        print('data added');
-        print(data);
-        
-        Navigator.push(context, MaterialPageRoute(builder: (context) => IntroPage()));
-        // IntroPage(), prueba a ver si sale la barra de abajo asi
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const IntroPage()));
       }else{
-        print('failed');
         showDialog(
           context: context, 
-          builder: (context) => AlertDialog(
-            title: Text('Something went wrong...'),
+          builder: (context) => const AlertDialog(
+            title:  Text('Something went wrong...'),
             content: Text('Check the data'),
           ),
         );
@@ -299,32 +308,34 @@ void addMsg(String bodyMsg, bookingId, currentUserId) async{
   }
 
   TextEditingController bodyMsg = TextEditingController();
-  // final _sbCreated = SnackBar(content: 
-  //   Text("Booking created!"),
-  //   duration: const Duration(milliseconds: 2000),);
 
+  // Add message build
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(" Add a message! "),
+        title: const Text(" Add a message! "),
         actions: [
           IconButton(
-          icon: Icon(Icons.arrow_back), 
-          onPressed: (){
-            Navigator.pop(context, MaterialPageRoute(builder: (context) => IntroPage()));
-          },
-         ),
+            icon: const Icon(Icons.arrow_back), 
+            onPressed: (){
+              Navigator.pop(context, MaterialPageRoute(builder: (context) => const IntroPage()));
+            },
+          ),
         ],
-        
-        titleTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: Colors.black),
+        titleTextStyle: const TextStyle(
+          fontWeight: FontWeight.bold, 
+          fontSize: 24, 
+          color: Colors.black
+        ),
         backgroundColor: Colors.white,
-        automaticallyImplyLeading: false, // cambia lo del boton hacia atras (testear)
-        scrolledUnderElevation: 0.0, // la barra superior deberia ser 100% transparente ahora
+        automaticallyImplyLeading: false, 
+        scrolledUnderElevation: 0.0, 
         elevation: 0,
       ),
       
       backgroundColor: Colors.white,
+
       body: Padding(
         padding: const EdgeInsets.all(8),
         child: Column(
@@ -335,21 +346,17 @@ void addMsg(String bodyMsg, bookingId, currentUserId) async{
 
             TextField(
               controller: bodyMsg,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Leave a comment!',
-                border: OutlineInputBorder(
-
-                ),
+                border: OutlineInputBorder(),
               ),
             ),
 
-            const SizedBox(height: 20,),
-
-            const SizedBox(height: 20,),
+            const SizedBox(height: 40,),
+            
             GestureDetector(
               onTap: () {
                 addMsg(bodyMsg.text.toString(), widget.b.id, widget.currentUser.id);
-                // Navigator.push(context, MaterialPageRoute(builder: (context) => IntroPage())); 
               },
               child: Container(
                 height: 60,
@@ -374,5 +381,4 @@ void addMsg(String bodyMsg, bookingId, currentUserId) async{
       ),
     );
   }
-
 }
