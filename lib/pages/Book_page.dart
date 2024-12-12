@@ -8,6 +8,7 @@ import 'package:kartf1/django/urls.dart';
 import 'package:kartf1/models/users.dart';
 import 'package:kartf1/pages/bookSelected_page.dart';
 import 'package:kartf1/pages/intro_page.dart';
+import 'package:kartf1/pages/login_page.dart';
 
 
 // USER OWN BOOKINGS CLASS
@@ -105,6 +106,17 @@ class _BookPageState extends State<BookPage> {
           icon: const Icon(Icons.add), 
           onPressed: (){
             Navigator.push(context, MaterialPageRoute(builder: (context) => const AddBookPage()));
+          },
+         ),
+         IconButton(
+          icon: const Icon(Icons.logout_outlined), 
+          onPressed: (){
+            var sb = SnackBar(
+              content: Text("See you again, ${cU.username}!"),
+              duration: const Duration(milliseconds: 2000),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(sb);
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginPage()));
           },
          ),
         ],
@@ -296,6 +308,7 @@ class _AddBookPageState extends State<AddBookPage>{
             ),
 
             DropdownButton(
+              dropdownColor: Colors.white,
               hint: const Text("Choose the circuit"),
               icon: const Icon(Icons.keyboard_arrow_down),
               items: circuits.map((item) {

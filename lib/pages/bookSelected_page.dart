@@ -72,7 +72,7 @@ class BookSelectedPage extends StatelessWidget {
       );
 
       if(response.statusCode == 204){
-        //print("Borrado");
+        
       }
       
     }catch(e){
@@ -212,9 +212,13 @@ class BookSelectedPage extends StatelessWidget {
                     trailing: currentUser.id == M[index].user 
                     ? IconButton( 
                         icon: const Icon(Icons.clear_sharp),
-                        onPressed: () async {
+                        onPressed: () {
                           deleteMsg(M[index].id);
-                          await Navigator.push(context, MaterialPageRoute(builder: (context) => const IntroPage()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const IntroPage()));
+                          showDialog(context: context, builder: (context) => const AlertDialog(
+                            title: Text('Done'),
+                            content: Text('The message was deleted'),
+                          ));
                         },
                       ) : const Text(" "),
                   );
@@ -223,6 +227,7 @@ class BookSelectedPage extends StatelessWidget {
           ),
           currentUser.id == b.user 
           ? DropdownButton(
+              dropdownColor: Colors.white,
               hint: const Text("Add a racer!"),
               icon: const Icon(Icons.keyboard_arrow_down),
               items: us.map((item) {
@@ -251,11 +256,15 @@ class BookSelectedPage extends StatelessWidget {
             },
               value: dropdownvalue,
           ) : IconButton(
-            onPressed: (){
-              eraseRacer(currentUser.id.toString());
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const IntroPage()));
-            }, 
-            icon: const Icon(Icons.door_back_door_outlined))
+                onPressed: (){
+                  eraseRacer(currentUser.id.toString());
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const IntroPage()));
+                  showDialog(context: context, builder: (context) => const AlertDialog(
+                    title: Text('Racer withdrawal'),
+                    content: Text('You left the booking'),
+                  ));
+                }, 
+                icon: const Icon(Icons.door_back_door_outlined))
         ],
       ),
     );
@@ -293,6 +302,10 @@ void addMsg(String bodyMsg, bookingId, currentUserId) async{
 
       if(response.statusCode == 201){
         Navigator.push(context, MaterialPageRoute(builder: (context) => const IntroPage()));
+        showDialog(context: context, builder: (context) => const AlertDialog(
+                    title: Text('Done'),
+                    content: Text('You added the message!'),
+        ));
       }else{
         showDialog(
           context: context, 

@@ -49,6 +49,11 @@ class _LoginPageState extends State<LoginPage>{
         List l = data.values.toList();
         Navigator.push(context, MaterialPageRoute(builder: (context) => IntroPage()));
         u.setUser(l[1],l[0]);
+        var sb = SnackBar(
+              content: Text("Welcome back, ${user}!"),
+              duration: const Duration(milliseconds: 2000),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(sb);
       }else{
         showDialog(
           context: context, 

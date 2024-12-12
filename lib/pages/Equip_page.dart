@@ -203,13 +203,6 @@ class _EquipPageState extends State<EquipPage>{
                                       color: Colors.grey,
                                     ),
                                   ),
-
-                                  Text(
-                                    '${_filteredEq[index].stock} units left' ,
-                                    style: const TextStyle(
-                                      color: Colors.grey,
-                                    ),
-                                  ),
                                 ],
                               ),
                           
