@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kartf1/models/equipments.dart';
-// import 'package:kartf1/models/photo.dart';
 
+// CART CLASS
 class Cart extends ChangeNotifier {
-  // List<Equipments> eqShop = [];
-
-  // List<Photo> ph = [
-  //   Photo(
-  //     imagePath: 'lib/images/casco.jpg'
-  //   )
-  // ];
 
   List<Equipments> userCart = [];
 
@@ -36,16 +29,10 @@ class Cart extends ChangeNotifier {
     String products = "";
     double finalPrice = 0;
     for(int i = 0; i < userCart.length; i++){
-      // print(userCart[i].name + " " + userCart[i].price.toString());
       products = "$products${userCart[i].name} ---- ${userCart[i].price}E \n";
       finalPrice = finalPrice + userCart[i].price;
-      //"$finalPrice${userCart[i].price}" as double;
     }
-    print(products);
-    print(finalPrice);
-
     return (products, finalPrice);
-    
   }
   
 }

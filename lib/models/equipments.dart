@@ -1,9 +1,12 @@
 import 'dart:convert';
 
+// TRANSFORMS EQUIPMENTS FROM JSON INTO A LIST
 List<Equipments> equipmentsFromJson(String str) => List<Equipments>.from(json.decode(str).map((x) => Equipments.fromJson(x)));
 
+// TRANSFORMS EQUIPMENTS FROM A LIST INTO JSON
 String equipmentsToJson(List<Equipments> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
+// EQUIPMENTS CLASS
 class Equipments {
     int id;
     String name;

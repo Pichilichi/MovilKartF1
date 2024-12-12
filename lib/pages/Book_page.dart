@@ -134,7 +134,7 @@ class _BookPageState extends State<BookPage> {
           itemCount: _filteredBooks.length,
           itemBuilder: (context, index) {
             return ListTile(
-              title: Text(_filteredBooks![index].name),
+              title: Text(_filteredBooks[index].name),
               subtitle: Text(" ${getUser(users, _filteredBooks[index].user)} "),
               onTap: () {                
                 Navigator.push(
@@ -431,7 +431,7 @@ class _OthersBookPageState extends State<OthersBookPage> {
           itemCount: _filteredBooks.length,
           itemBuilder: (context, index) {
             return ListTile(
-              title: Text(_filteredBooks![index].name),
+              title: Text(_filteredBooks[index].name),
               subtitle: Text(" ${getUser(users, _filteredBooks[index].user)} "),
               onTap: () {  
                 Navigator.push(

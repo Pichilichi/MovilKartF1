@@ -1,9 +1,12 @@
 import 'dart:convert';
 
+// TRANSFORMS SHOPPING HISTORY FROM JSON INTO A LIST
 List<ShoppingHistory> shoppingHistoryFromJson(String str) => List<ShoppingHistory>.from(json.decode(str).map((x) => ShoppingHistory.fromJson(x)));
 
+// TRANSFORMS SHOPPING HISTORY FROM A LIST INTO JSON
 String shoppingHistoryToJson(List<ShoppingHistory> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
+// SHOPPING HISTORY CLASS
 class ShoppingHistory {
     int id;
     int user;

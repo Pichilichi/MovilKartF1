@@ -3,6 +3,7 @@ import 'package:kartf1/models/cart.dart';
 import 'package:kartf1/models/equipments.dart';
 import 'package:provider/provider.dart';
 
+// CLASS FOR THE ITEMS IN THE CART
 class CartItem extends StatefulWidget {
   Equipments equip;
   CartItem({super.key,
@@ -13,6 +14,7 @@ class CartItem extends StatefulWidget {
   State<CartItem> createState() => _CAartItemState();
 }
 
+// STATE
 class _CAartItemState extends State<CartItem> {
 
   void removeItemFromCart(){
@@ -27,18 +29,11 @@ class _CAartItemState extends State<CartItem> {
         borderRadius: BorderRadius.circular(8),
       ),
       margin: const EdgeInsets.only(bottom: 10),
-      // child: ListTile(
-      //   title: Text(widget.equip.name),
-      //   subtitle: Text(widget.equip.price.toString() + '\€'),
-      //   trailing: IconButton(
-      //     icon: Icon(Icons.delete), 
-      //     onPressed: removeItemFromCart,
-      //   ),
-      // ),
       child: Column(
         children: [
           Row(
             children: [
+              
               ClipRRect(
                 borderRadius: BorderRadius.circular(50),
                 child: Image.network("https://pacou.pythonanywhere.com${widget.equip.img}", 

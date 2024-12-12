@@ -1,9 +1,12 @@
 import 'dart:convert';
 
+// TRANSFORMS USERS FROM JSON INTO A LIST
 List<Users> usersFromJson(String str) => List<Users>.from(json.decode(str).map((x) => Users.fromJson(x)));
 
+// TRANSFORMS USERS FROM A LIST INTO JSON
 String usersToJson(List<Users> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
+// USER CLASS
 class Users {
     int id;
     String username;

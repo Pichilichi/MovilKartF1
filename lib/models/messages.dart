@@ -1,10 +1,12 @@
-
 import 'dart:convert';
 
+// TRANSFORMS MESSAGES FROM JSON INTO A LIST
 List<Messages> messagesFromJson(String str) => List<Messages>.from(json.decode(str).map((x) => Messages.fromJson(x)));
 
+// TRANSFORMS MESSAGES FROM A LIST INTO JSON
 String messagesToJson(List<Messages> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
+// MESSAGES CLASS
 class Messages {
     int id;
     String body;

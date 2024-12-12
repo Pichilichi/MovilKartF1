@@ -1,13 +1,12 @@
-// To parse this JSON data, do
-//
-//     final event = eventFromJson(jsonString);
-
 import 'dart:convert';
 
+// TRANSFORMS BOOKINGS FROM JSON INTO A LIST
 List<Booking> bookingFromJson(String str) => List<Booking>.from(json.decode(str).map((x) => Booking.fromJson(x)));
 
+// TRANSFORMS BOOKINGS FROM A LIST INTO JSON
 String bookingToJson(List<Booking> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
+// BOOKING CLASS
 class Booking {
     int id;
     String name;

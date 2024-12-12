@@ -1,10 +1,12 @@
 import 'dart:convert';
-import 'dart:ffi';
 
+// TRANSFORMS CIRCUITS FROM JSON INTO A LIST
 List<Circuits> circuitsFromJson(String str) => List<Circuits>.from(json.decode(str).map((x) => Circuits.fromJson(x)));
 
+// TRANSFORMS CIRCUITS FROM A LIST INTO JSON
 String circuitsToJson(List<Circuits> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
+// CIRCUITS CLASS
 class Circuits {
     int id;
     String name;

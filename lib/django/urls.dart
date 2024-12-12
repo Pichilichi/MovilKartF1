@@ -1,13 +1,10 @@
 import 'package:kartf1/models/bookings.dart';
 import 'package:http/http.dart' as http;
 import 'package:kartf1/models/shoppingHistory.dart';
-// import 'dart:convert';
 import 'dart:async';
-
 import '../models/categories.dart';
 import '../models/circuits.dart';
 import '../models/equipments.dart';
-import '../models/karts.dart';
 import '../models/messages.dart';
 import '../models/users.dart';
 
@@ -16,7 +13,7 @@ class Urls{
 
   static Users? currentUser;
 
-  //BOOKINGS
+  // BOOKINGS
   Future<List<Booking>?> getBookings() async {  
     var client = http.Client();
 
@@ -28,7 +25,7 @@ class Urls{
     }
   }
 
-  //CIRCUITS
+  // CIRCUITS
   Future<List<Circuits>?> getCircuits() async {
     var client = http.Client();
 
@@ -40,7 +37,7 @@ class Urls{
     }
   }
 
-  //CATEGORIES
+  // CATEGORIES
   Future<List<Categories>?> getCategories() async {
     var client = http.Client();
 
@@ -52,7 +49,7 @@ class Urls{
     }
   }
 
-  //EQUIPMENTS
+  // EQUIPMENTS
   Future<List<Equipments>?> getEquipments() async {
     var client = http.Client();
 
@@ -64,19 +61,7 @@ class Urls{
     }
   }
 
-  //KARTS
-  Future<List<Karts>?> getKarts() async {
-    var client = http.Client();
-
-    var uri = Uri.parse('https://pacou.pythonanywhere.com/karts/');
-    var response = await client.get(uri);
-    if(response.statusCode == 200){
-      var json = response.body;
-      return kartsFromJson(json);
-    }
-  }
-
-  //MESSAGES
+  // MESSAGES
   Future<List<Messages>?> getMessages() async {
     var client = http.Client();
 
@@ -88,6 +73,7 @@ class Urls{
     }
   }
 
+  // USERS
   Future<List<Users>?> getUsers() async {
     var client = http.Client();
 
@@ -99,6 +85,7 @@ class Urls{
     }
   }
 
+  // PURCHASES
   Future<List<ShoppingHistory>?> getPurchases() async {
     var client = http.Client();
 
@@ -110,42 +97,15 @@ class Urls{
     }
   }
 
-  // Future<List<Users>?> getUser() async {
-  //   var client = http.Client();
-
-  //   var uri = Uri.parse('https://pacou.pythonanywhere.com/user/');
-  //   var response = await client.get(uri);
-  //   if(response.statusCode == 200){
-  //     var json = response.body;
-  //     return usersFromJson(json);
-  //   }
-  // }
-
+  // SETS THE CURRENT USER
   setUser(String user, int id) {
     currentUser = Users(id : id, username : user);
-    print("desde urls.dart");
-    print(currentUser?.username);
-    print(currentUser?.id);
-    print(getUser());
   }
 
+  // GETS THE CURRENT USER
   static getUser()  {
     return currentUser;
   }
-
- 
-
-  // Future<List<Users>?> getCurrentUser() async {
-  //   var client = http.Client();
-
-  //   var uri = Uri.parse('https://pacou.pythonanywhere.com/user/');
-  //   var response = await client.get(uri);
-  //   if(response.statusCode == 200){
-  //     var json = response.body;
-  //     return usersFromJson(json);
-  //   }
-  // }
-
 }
 
 
